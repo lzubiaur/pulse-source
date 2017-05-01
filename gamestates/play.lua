@@ -1,6 +1,5 @@
 -- play.lua
 
-local inspect = require 'modules.inspect'
 local Game =  require 'game'
 
 local Play = Game:addState('Play')

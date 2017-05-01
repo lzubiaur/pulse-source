@@ -1,6 +1,17 @@
 -- main.lua
 
-local inspect = require 'modules.inspect'
+-- Load lib modules globally
+Class    = require 'modules.middleclass'
+Stateful = require 'modules.stateful'
+Inspect  = require 'modules.inspect'
+Push     = require 'modules.push'
+Loader   = require 'modules.love-loader'
+
+conf = {
+  build = 'debug',
+  -- The game fixed resolution. Use a 16:9 aspect ratio
+  width = 640, height = 360,
+}
 
 -- Note on loading package:
 -- On some platforms like mac osx, the file system is by default not case sensitive
@@ -11,12 +22,30 @@ local inspect = require 'modules.inspect'
 -- This can have side effect if we want to use the same package instance but loaded it with a different name.
 
 local Game = require 'game'
+-- Load game states after Game
+require 'gamestates.loading'
 require 'gamestates.play'
 require 'gamestates.start'
 
 local game = nil
 
 function love.load()
+  -- Avoid anti-alising/blur when scaling
+  love.graphics.setDefaultFilter('nearest', 'nearest', 0)
+  love.graphics.setBackgroundColor(0,0,0)
+
+  -- Gets the width and height of the window
+  local w,h = love.graphics.getDimensions()
+
+  Push:setupScreen(conf.width, conf.height, w,h, {
+    fullscreen = false,
+    resizable = true,
+    highdpi = true,
+    canvas = true,
+    stretched = true, -- Keep aspect ratio or strech to borders
+    pixelperfect = true,
+  })
+
   game = Game:new()
 end
 
@@ -26,6 +55,11 @@ end
 
 function love.update(dt)
   game:update(dt)
+end
+
+-- Must call puse:resize when window resizes
+function love.resize(w, h)
+  Push:resize(w, h)
 end
 
 function love.keypressed(key, isRepeat)
