@@ -1,6 +1,8 @@
 -- start.lua
 
-local Start = {}
+local Game = require 'game'
+
+local Start = Game:addState('Start')
 
 function Start:draw()
   love.graphics.print('Push key to start',100,100)
