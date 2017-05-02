@@ -1,6 +1,8 @@
 //from "Share a Shader" forum thread
 
-extern number shift = 0;
+// Uniform (extern) variable can't be initialized on Android
+extern number shift;
+
 vec4 effect(vec4 color, Image texture, vec2 texture_coords, vec2 pixel_coords)
   {
   vec2 tc = texture_coords;
