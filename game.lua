@@ -6,14 +6,15 @@ local time = 0
 local shader1, shader2
 
 function Game:initialize()
-  self:gotoState('Loading')
   shader1 = love.graphics.newShader("resources/shaders/shader1.fs")
   shader2 = love.graphics.newShader("resources/shaders/shader2.fs")
   Push:setupCanvas({
     { name = "shader", shader = shader1 }, --applied only to one canvas
     { name = "noshader" }
   })
-  Push:setShader( shader2 ) --applied to final render
+  Push:setShader(shader2) --applied to final render
+
+  self:gotoState('Loading')
 end
 
 function Game:updateShaders(dt)
