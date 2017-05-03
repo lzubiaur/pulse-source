@@ -6,6 +6,8 @@ Stateful = require 'modules.stateful'
 Inspect  = require 'modules.inspect'
 Push     = require 'modules.push'
 Loader   = require 'modules.love-loader'
+Log      = require "modules.log"
+
 
 local platform = love.system.getOS()
 
@@ -15,6 +17,8 @@ conf = {
   width = 640, height = 360,
   mobileBuild = platform == 'Android' or platform == 'iOS',
 }
+
+Log.level = conf.build == 'debug' and 'debug' or 'warn'
 
 -- Note on loading package:
 -- On some platforms like mac osx, the file system is by default not case sensitive
@@ -33,6 +37,8 @@ require 'gamestates.start'
 local game = nil
 
 function love.load()
+  Log.warn('WARNING')
+  Log.debug('debug doo')
   -- Avoid anti-alising/blur when scaling. Useful for pixel art.
   -- love.graphics.setDefaultFilter('nearest', 'nearest', 0)
 
