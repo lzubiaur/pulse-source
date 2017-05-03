@@ -7,10 +7,13 @@ Inspect  = require 'modules.inspect'
 Push     = require 'modules.push'
 Loader   = require 'modules.love-loader'
 
+local platform = love.system.getOS()
+
 conf = {
   build = 'debug',
   -- The game fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
+  mobileBuild = platform == 'Android' or platform == 'iOS',
 }
 
 -- Note on loading package:
@@ -30,20 +33,21 @@ require 'gamestates.start'
 local game = nil
 
 function love.load()
-  -- Avoid anti-alising/blur when scaling
-  love.graphics.setDefaultFilter('nearest', 'nearest', 0)
+  -- Avoid anti-alising/blur when scaling. Useful for pixel art.
+  -- love.graphics.setDefaultFilter('nearest', 'nearest', 0)
+
   love.graphics.setBackgroundColor(0,0,0)
 
   -- Gets the width and height of the window
   local w,h = love.graphics.getDimensions()
 
   Push:setupScreen(conf.width, conf.height, w,h, {
-    fullscreen = false,
-    resizable = true,
+    fullscreen = conf.mobileBuild,
+    resizable = not conf.mobileBuild,
     highdpi = true,
     canvas = true,
     stretched = true, -- Keep aspect ratio or strech to borders
-    pixelperfect = true,
+    pixelperfect = false,
   })
 
   game = Game:new()
@@ -57,9 +61,22 @@ function love.update(dt)
   game:update(dt)
 end
 
--- Must call puse:resize when window resizes
+-- Must call puse:resize when window resizes.
+-- Also call on mobile at app launch because fullscreen is enable.
 function love.resize(w, h)
   Push:resize(w, h)
+end
+
+function love.touchpressed(id, x, y, dx, dy, pressure)
+  game:touchpressed(id, x, y, dx, dy, pressure)
+end
+
+function love.touchmoved(id, x, y, dx, dy, pressure)
+  game:touchmoved(id, x, y, dx, dy, pressure)
+end
+
+function love.touchreleased(id, x, y, dx, dy, pressure)
+  game:touchreleased(id, x, y, dx, dy, pressure)
 end
 
 function love.keypressed(key, isRepeat)

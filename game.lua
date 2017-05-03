@@ -32,4 +32,9 @@ end
 function Game:keypressed(key, isRepeat)
 end
 
+function Game:touchpressed()
+  print 'DEBUG'
+  love.event.quit()
+end
+
 return Game
