@@ -100,6 +100,6 @@ function love.touchreleased(id, x, y, dx, dy, pressure)
   game:touchreleased(id, x, y, dx, dy, pressure)
 end
 
-function love.keypressed(key, isRepeat)
-  game:keypressed(key, isRepeat)
+function love.keypressed(key, scancode, isrepeat)
+  game:keypressed(key, scancode, isRepeat)
 end

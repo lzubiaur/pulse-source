@@ -31,7 +31,7 @@ function Game:draw()
   -- nothing to do
 end
 
-function Game:keypressed(key, isRepeat)
+function Game:keypressed(key, scancode, isRepeat)
   -- nothing to do
 end
 
