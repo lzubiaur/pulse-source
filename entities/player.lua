@@ -7,15 +7,29 @@ local Player = Class('Player', Entity)
 function Player:initialize(world, x,y)
   Lume.extend(self, {
       world = world,
-      x = x, y = y,
-      w = conf.cellSize, h = conf.cellSize,
-      vx = 500, vy = 1000, -- gravity
+      x = x, y = y, -- position
+      w = conf.cellSize, h = conf.cellSize, -- size
+      vx = 50, vy = 0, -- velocity
+      gy = 500, -- vertical gravity
+      impulse = -100, -- vertical jump impulse
       jumps = 0, -- jump count (max 2)
-      force = 0, -- jump force
       released = true, -- touch/key has been released
   })
   world:add(self, x,y ,self.w, self.h)
   -- self.jumpTween = Tween.new(0.5, self, { jumpForce = -800 }, 'inOutSine')
+end
+
+function Player:jump()
+  if self.jumps < 2 then
+    self.vy = self.impulse
+    self.jumps = self.jumps + 1
+  end
+end
+
+function Player:keypressed(key, scancode, isrepeat)
+  if key == 'space' and not isrepeat then
+    self:jump()
+  end
 end
 
 function Player:draw()
@@ -26,25 +40,12 @@ function Player:draw()
 end
 
 function Player:update(dt)
-  if self.force < 0 then
-    self.force = self.force + 500
-    if self.force >= 0 then
-      self.force = 0
-    end
-  end
 
-  if love.keyboard.isDown('space') then
-    if self.released and self.jumps < 2 then
-      self.force = -4000
-      self.jumps = self.jumps + 1
-    end
-    self.released = false
-  else
-    self.released = true
-  end
-
-  self.y = self.y + dt * (self.vy + self.force)
+  -- Apply velocity
   self.x = self.x + dt * self.vx
+  self.y = self.y + dt * self.vy
+  -- Apply vertical gravity on velocity
+  self.vy = self.vy + dt * self.gy
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y)
 

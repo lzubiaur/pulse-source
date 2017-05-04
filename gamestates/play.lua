@@ -63,4 +63,8 @@ function Play:update(dt)
   self.camera:setPosition(self.player.x, self.player.y)
 end
 
+function Play:keypressed(key, scancode, isrepeat)
+  self.player:keypressed(key, scancode, isrepeat)
+end
+
 return Play
