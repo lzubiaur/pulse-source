@@ -2,6 +2,7 @@
 
 local Game   = require 'game'
 local Ground = require 'entities.ground'
+local Player = require 'entities.player'
 
 local Play = Game:addState('Play')
 
@@ -10,14 +11,11 @@ function Play:enteredState()
   self.entities = {}
   self.world = Bump.newWorld(conf.cellSize)
   self.map = self:loadMap(self.world, 'resources/maps/map01.lua')
+  self.player = Player:new(self.world, 10, 10)
 end
 
 function Play:exitedState()
   Log.info 'exited state "Play"'
-end
-
-function Play:exitedState()
-  print 'exited state'
 end
 
 function Play:loadMap(world, filename)
@@ -44,9 +42,11 @@ function Play:draw()
   for _,entity in ipairs(self.entities) do
     entity:draw()
   end
+  self.player:draw()
 end
 
 function Play:update(dt)
+  self.player:update(dt)
 end
 
 return Play
