@@ -1,24 +1,37 @@
 -- main.lua
 
--- Load lib modules globally
-Class    = require 'modules.middleclass'
-Stateful = require 'modules.stateful'
-Inspect  = require 'modules.inspect'
-Push     = require 'modules.push'
-Loader   = require 'modules.love-loader'
-Log      = require "modules.log"
-
-
 local platform = love.system.getOS()
 
+-- Global game configuration
 conf = {
   build = 'debug',
   -- The game fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
+  -- Bump world cell size. Should be a multiple of the tile size.
+  cellSize = 64,
+  -- Run on a mobile platform?
   mobileBuild = platform == 'Android' or platform == 'iOS',
 }
 
+-- Load 3rd party libraries/modules globally
+Class     = require 'modules.middleclass'
+Stateful  = require 'modules.stateful'
+Inspect   = require 'modules.inspect'
+Push      = require 'modules.push'
+Loader    = require 'modules.love-loader'
+Log       = require 'modules.log'
+Bump      = require 'modules.bump'
+STI       = require 'modules.sti'
+
+
+-- Load LoveDebug module
+-- if conf.build == 'debug' then
+--   LoveDebug = require 'modules.lovedebug'
+-- end
+
+-- Log level
 Log.level = conf.build == 'debug' and 'debug' or 'warn'
+Log.usecolor = false
 
 -- Note on loading package:
 -- On some platforms like mac osx, the file system is by default not case sensitive

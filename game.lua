@@ -33,7 +33,7 @@ function Game:keypressed(key, isRepeat)
 end
 
 function Game:touchpressed()
-  print 'DEBUG'
+  Log.info('Quit game')
   love.event.quit()
 end
 
