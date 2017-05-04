@@ -24,12 +24,15 @@ function Game:updateShaders(dt)
 end
 
 function Game:update(dt)
+  -- nothing to do
 end
 
 function Game:draw()
+  -- nothing to do
 end
 
 function Game:keypressed(key, isRepeat)
+  -- nothing to do
 end
 
 function Game:touchpressed()
