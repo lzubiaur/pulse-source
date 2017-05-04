@@ -5,15 +5,16 @@ local platform = love.system.getOS()
 -- Global game configuration
 conf = {
   build = 'debug',
-  -- The game fixed resolution. Use a 16:9 aspect ratio
+  -- The game window fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
-  -- Bump world cell size. Should be a multiple of the tile size.
+  -- Bump world cell size. Should be a multiple of the map's tile size.
   cellSize = 64,
   -- Run on a mobile platform?
   mobileBuild = platform == 'Android' or platform == 'iOS',
 }
 
--- Load 3rd party libraries/modules globally
+-- Load 3rd party libraries/modules globally.
+-- All modules should start with capital letter.
 Class     = require 'modules.middleclass'
 Stateful  = require 'modules.stateful'
 Inspect   = require 'modules.inspect'
@@ -22,6 +23,9 @@ Loader    = require 'modules.love-loader'
 Log       = require 'modules.log'
 Bump      = require 'modules.bump'
 STI       = require 'modules.sti'
+Tween     = require 'modules.tween'
+Lume      = require 'modules.lume'
+Gamera    = require 'modules.gamera'
 
 
 -- Load LoveDebug module
@@ -50,8 +54,6 @@ require 'gamestates.start'
 local game = nil
 
 function love.load()
-  Log.warn('WARNING')
-  Log.debug('debug doo')
   -- Avoid anti-alising/blur when scaling. Useful for pixel art.
   -- love.graphics.setDefaultFilter('nearest', 'nearest', 0)
 
