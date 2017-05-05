@@ -35,9 +35,13 @@ function Game:keypressed(key, scancode, isRepeat)
   -- nothing to do
 end
 
-function Game:touchpressed()
-  Log.info('Quit game')
-  love.event.quit()
+function Game:touchpressed(id, x, y, dx, dy, pressure)
+end
+
+function Game:touchmoved(id, x, y, dx, dy, pressure)
+end
+
+function Game:touchreleased(id, x, y, dx, dy, pressure)
 end
 
 return Game

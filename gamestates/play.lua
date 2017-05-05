@@ -7,24 +7,27 @@ local Player = require 'entities.player'
 local Play = Game:addState('Play')
 
 function Play:enteredState()
-  Log.info 'entered state "Play"'
+  Log.info 'Entered state "Play"'
+  self.isReleased = true -- touch flag to check touch is "repeat"
   self.entities = {}
   -- Create the physics world
   self.world = Bump.newWorld(conf.cellSize)
   -- Load the game map
   self.map = self:loadMap(self.world, 'resources/maps/map01.lua')
-  -- TODO load player position from map
-  local ox,oy = 10,10
+  -- Load player position from map
+  local x,y = self.map.properties['player.x'] * self.map.tilewidth,
+              self.map.properties['player.y'] * self.map.tileheight
+  Log.debug('Player position',x,y)
   -- Create the player entity
-  self.player = Player:new(self.world, ox,oy)
+  self.player = Player:new(self.world, x,y)
   -- Change the world position to the player's position
-  self.world:update(self.player, ox,oy)
+  self.world:update(self.player, x,y)
   -- Get world map size
   self.worldWidth = self.map.tilewidth * self.map.width
   self.worldHeight = self.map.tileheight * self.map.height
-  -- Create the follow camera
+  -- Create the follow camera. Size of the camera is the size of the map
   self.camera = Gamera.new(0,0, self.worldWidth, self.worldHeight)
-  self.camera:setPosition(ox,oy)
+  self.camera:setPosition(x,y)
 end
 
 function Play:exitedState()
@@ -57,14 +60,32 @@ end
 
 function Play:update(dt)
   self.player:update(dt)
-  -- TODO why lerp?
-  -- local x,y = self.camera:getPosition()
-  -- self.camera:setPosition(Lume.lerp(x,self.player.x,0.5),Lume.lerp(y,self.player.y,0.5))
-  self.camera:setPosition(self.player.x, self.player.y)
+  -- self.camera:setPosition(self.player.x + conf.width * 0.5, self.player.y)
+
+  -- TODO smooth the camera
+  local x,y = self.camera:getPosition()
+  self.camera:setPosition(Lume.lerp(x,self.player.x,0.05),Lume.lerp(y,self.player.y,0.05))
+end
+
+function Play:touchpressed(id, x, y, dx, dy, pressure)
+  Log.debug('touch pressed')
+  if self.isReleased then
+    self.player:jump()
+  end
+  self.isReleased = false
+end
+
+function Play:touchmoved(id, x, y, dx, dy, pressure)
+end
+
+function Play:touchreleased(id, x, y, dx, dy, pressure)
+  self.isReleased = true
 end
 
 function Play:keypressed(key, scancode, isrepeat)
-  self.player:keypressed(key, scancode, isrepeat)
+  if key == 'space' and not isrepeat then
+    self.player:jump()
+  end
 end
 
 return Play
