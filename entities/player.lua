@@ -9,9 +9,9 @@ function Player:initialize(world, x,y)
       world = world,
       x = x, y = y, -- position
       w = conf.cellSize, h = conf.cellSize, -- size
-      vx = 50, vy = 0, -- velocity
-      gy = 500, -- vertical gravity
-      impulse = -100, -- vertical jump impulse
+      vx = 800, vy = 0, -- velocity
+      gy = 800, -- vertical gravity
+      impulse = -400, -- vertical jump impulse
       jumps = 0, -- jump count (max 2)
       released = true, -- touch/key has been released
   })
@@ -49,8 +49,13 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y)
 
+  -- Decrease jumps count if player touches ground but not walls and roof
   if len > 0 and self.jumps > 0 then
-    self.jumps = self.jumps - 1
+    for i=1,len do
+      if cols[i].normal.y < 0 then
+        self.jumps = self.jumps - 1
+      end
+    end
   end
 end
 
