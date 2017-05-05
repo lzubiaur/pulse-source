@@ -28,4 +28,8 @@ function Start:keypressed(key, isRepeat)
   self:gotoState('Play')
 end
 
+function Start:touchreleased()
+  self:gotoState('Play')
+end
+
 return Start

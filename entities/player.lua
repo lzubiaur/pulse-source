@@ -8,10 +8,12 @@ function Player:initialize(world, x,y)
   Lume.extend(self, {
       world = world,
       x = x, y = y, -- position
+      -- TODO set player size from map cell size
       w = conf.cellSize, h = conf.cellSize, -- size
-      vx = 800, vy = 0, -- velocity
-      gy = 800, -- vertical gravity
-      impulse = -400, -- vertical jump impulse
+      vx = 800, vy = 0, -- current velocity
+      mx = 800, my = 800, -- max velocity
+      gy = 4000, -- vertical gravity
+      impulse = -1000, -- vertical jump impulse
       jumps = 0, -- jump count (max 2)
       released = true, -- touch/key has been released
   })
@@ -26,12 +28,6 @@ function Player:jump()
   end
 end
 
-function Player:keypressed(key, scancode, isrepeat)
-  if key == 'space' and not isrepeat then
-    self:jump()
-  end
-end
-
 function Player:draw()
   local r,g,b,a = love.graphics.getColor()
   love.graphics.setColor(0, 255, 0, 255)
@@ -40,12 +36,16 @@ function Player:draw()
 end
 
 function Player:update(dt)
+  -- Apply vertical gravity
+  self.vy = self.vy + dt * self.gy
+
+  -- clamp velocity
+  self.vx = Lume.sign(self.vx) * Lume.clamp(math.abs(self.vx), 0, self.mx)
+  self.vy = Lume.sign(self.vy) * Lume.clamp(math.abs(self.vy), 0, self.my)
 
   -- Apply velocity
   self.x = self.x + dt * self.vx
   self.y = self.y + dt * self.vy
-  -- Apply vertical gravity on velocity
-  self.vy = self.vy + dt * self.gy
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y)
 
