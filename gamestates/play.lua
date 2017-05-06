@@ -3,6 +3,7 @@
 local Game   = require 'game'
 local Ground = require 'entities.ground'
 local Player = require 'entities.player'
+local Entity = require 'entities.entity'
 
 local Play = Game:addState('Play')
 
@@ -61,21 +62,29 @@ function Play:draw()
   local items, len
   self.camera:draw(function(l,t,w,h)
     items,len = self.world:queryRect(l,t,w,h)
+    table.sort(items,Entity.sortByZOrder)
     Lume.each(items,'draw')
   end)
 end
 
 function Play:update(dt)
-  self.player:update(dt)
 
+  -- TODO gameover
   if self.player.y > self.worldHeight then
     self:gotoState('Start')
   end
 
+  -- Update visible entities
+  -- TODO add a radius to update outside the visible windows
+  local l,t,h,w = self.camera:getVisible()
+  local items,len = self.world:queryRect(l,t,w,h)
+  Lume.each(items,'update',dt)
+
   -- TODO smooth the camera. X doesnt work smoothly
   local x,y = self.camera:getPosition()
+  local px, py = self.player:getCenter()
   -- self.camera:setPosition(Lume.lerp(x,self.player.x,0.05),Lume.lerp(y,self.player.y,0.05))
-  self.camera:setPosition(self.player.x + 250,Lume.lerp(y,self.player.y,0.05))
+  self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
