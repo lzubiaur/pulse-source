@@ -16,7 +16,7 @@ function Player:initialize(world, x,y)
       dusts = {}, -- dust particles
   })
   -- TODO set player size from map cell size
-  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = 500, mass = 5})
+  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = 500, mass = 5, zOrder = 1})
 end
 
 function Player:jump()
@@ -40,8 +40,10 @@ function Player:addDustParticle()
 end
 
 function Player:createDust(col)
-  local dust = Dust:new(self.world,self.x + self.w * love.math.random(),self.y+self.h-10)
-  table.insert(self.dusts,dust)
+  if self.vx > 0 then
+    local dust = Dust:new(self.world,self.x + self.w * love.math.random(),self.y+self.h-10)
+    table.insert(self.dusts,dust)
+  end
 end
 
 function Player:filter(other)
