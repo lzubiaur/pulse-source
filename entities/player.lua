@@ -1,24 +1,22 @@
 -- player.lua
 
 local Entity = require 'entities.entity'
+local Ground = require 'entities.ground'
+local Dust   = require 'entities.dust'
 
 local Player = Class('Player', Entity)
 
+local maxDust = 8
+
 function Player:initialize(world, x,y)
   Lume.extend(self, {
-      world = world,
-      x = x, y = y, -- position
-      -- TODO set player size from map cell size
-      w = conf.cellSize, h = conf.cellSize, -- size
-      vx = 800, vy = 0, -- current velocity
-      mx = 800, my = 800, -- max velocity
-      gy = 4000, -- vertical gravity
       impulse = -1000, -- vertical jump impulse
       jumps = 0, -- jump count (max 2)
       released = true, -- touch/key has been released
+      dusts = {}, -- dust particles
   })
-  world:add(self, x,y ,self.w, self.h)
-  -- self.jumpTween = Tween.new(0.5, self, { jumpForce = -800 }, 'inOutSine')
+  -- TODO set player size from map cell size
+  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = 500, mass = 5})
 end
 
 function Player:jump()
@@ -33,26 +31,41 @@ function Player:draw()
   love.graphics.setColor(0, 255, 0, 255)
   love.graphics.rectangle('line', self.x,self.y, self.w,self.h)
   love.graphics.setColor(r,g,b,a)
+  love.graphics.points(self:getCenter())
+end
+
+function Player:addDustParticle()
+  local dust = Dust:new(self.world,self.x,self.y)
+  table.insert(self.dusts,dust)
+end
+
+function Player:createDust(col)
+  local dust = Dust:new(self.world,self.x + self.w * love.math.random(),self.y+self.h-10)
+  table.insert(self.dusts,dust)
+end
+
+function Player:filter(other)
+  return other:isInstanceOf(Ground) and 'slide' or nil
 end
 
 function Player:update(dt)
-  -- Apply vertical gravity
-  self.vy = self.vy + dt * self.gy
 
-  -- clamp velocity
-  self.vx = Lume.sign(self.vx) * Lume.clamp(math.abs(self.vx), 0, self.mx)
-  self.vy = Lume.sign(self.vy) * Lume.clamp(math.abs(self.vy), 0, self.my)
+  Lume.each(self.dusts,'update',dt)
 
-  -- Apply velocity
-  self.x = self.x + dt * self.vx
-  self.y = self.y + dt * self.vy
+  self:applyGravity(dt)
+  self:applyVelocity(dt)
+  self:clampVelocity()
 
-  self.x, self.y, cols, len = self.world:move(self, self.x,self.y)
+  self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
 
-  -- Decrease jumps count if player touches ground but not walls and roof
-  if len > 0 and self.jumps > 0 then
+  if len > 0 then
     for i=1,len do
-      if cols[i].normal.y < 0 then
+      local col = cols[i]
+      if col.other:isInstanceOf(Ground) then
+        self:createDust(col)
+      end
+      -- Decrease jumps count only when player touches ground
+      if self.jumps > 0 and col.normal.y < 0 then
         self.jumps = self.jumps - 1
       end
     end

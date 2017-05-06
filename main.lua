@@ -1,5 +1,7 @@
 -- main.lua
 
+love.math.setRandomSeed(os.time())
+
 local platform = love.system.getOS()
 
 -- Global game configuration
@@ -11,6 +13,8 @@ conf = {
   cellSize = 64,
   -- Run on a mobile platform?
   mobileBuild = platform == 'Android' or platform == 'iOS',
+  -- vertical gravity
+  gravity = 1000
 }
 
 -- Load 3rd party libraries/modules globally.
@@ -26,7 +30,7 @@ STI       = require 'modules.sti'
 Tween     = require 'modules.tween'
 Lume      = require 'modules.lume'
 Gamera    = require 'modules.gamera'
-
+-- Cron      = require 'modules.cron'
 
 -- Load LoveDebug module
 -- if conf.build == 'debug' then
