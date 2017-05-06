@@ -14,6 +14,11 @@ function Game:initialize()
   })
   Push:setShader(shader2) --applied to final render
 
+  -- default graphics params
+  love.graphics.setLineWidth(8)
+  love.graphics.setLineJoin('bevel')
+  love.graphics.setPointSize(5)
+
   self:gotoState('Loading')
 end
 
