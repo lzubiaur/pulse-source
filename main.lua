@@ -7,7 +7,7 @@ local platform = love.system.getOS()
 -- Global game configuration
 conf = {
   build = 'debug',
-  -- The game window fixed resolution. Use a 16:9 aspect ratio
+  -- The game fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
   -- Bump world cell size. Should be a multiple of the map's tile size.
   cellSize = 64,
@@ -15,6 +15,8 @@ conf = {
   mobileBuild = platform == 'Android' or platform == 'iOS',
   -- vertical gravity
   gravity = 1000
+  -- camera
+  -- TODO add camera parameters (camera borders, smooth/lerp)
 }
 
 -- Load 3rd party libraries/modules globally.
