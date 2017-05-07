@@ -41,7 +41,9 @@ end
 
 function Player:createDust(col)
   if self.vx > 0 then
-    local dust = Dust:new(self.world,self.x + self.w * love.math.random(),self.y+self.h-10)
+    -- TODO dust position
+    -- TODO check remove "dead" dust
+    local dust = Dust:new(self.world,self.x+self.w * love.math.random(),self.y+self.h-10)
     table.insert(self.dusts,dust)
   end
 end
