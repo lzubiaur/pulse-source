@@ -33,6 +33,8 @@ Tween     = require 'modules.tween'
 Lume      = require 'modules.lume'
 Gamera    = require 'modules.gamera'
 -- Cron      = require 'modules.cron'
+-- BumpDebug not working properly
+-- BumpDebug = require 'modules.bump_debug'
 
 -- Load LoveDebug module
 -- if conf.build == 'debug' then

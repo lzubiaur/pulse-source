@@ -6,11 +6,8 @@ local Start = Game:addState('Start')
 
 function Start:draw()
   Push:start()
-
-  Push:setCanvas('shader')
-  love.graphics.rectangle('line',0,0,conf.width,conf.height)
-  love.graphics.print('Push key to start',100,100)
-  -- Push:setCanvas('noshader')
+    love.graphics.rectangle('line',0,0,conf.width,conf.height)
+    love.graphics.print('Push key to start',100,100)
   Push:finish()
 end
 

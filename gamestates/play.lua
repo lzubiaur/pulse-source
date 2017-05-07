@@ -37,7 +37,8 @@ function Play:enteredState()
   -- Create the follow camera. Size of the camera is the size of the map
   self.camera = Gamera.new(0,0, self.worldWidth, self.worldHeight)
   self.camera:setPosition(self.player:getCenter())
-
+  -- Camera window must be set to the game resolution and not the
+  -- the actual screen resolution
   self.camera:setWindow(0,0,conf.width,conf.height)
   Log.debug('camera window',self.camera:getWindow())
 end
@@ -64,7 +65,7 @@ end
 function Play:draw()
   local items, len
   Push:start()
-  Push:setCanvas('shader')
+  Push:setCanvas('shader1')
   self.camera:draw(function(l,t,w,h)
     love.graphics.rectangle('line', 0,0, self.worldWidth,self.worldHeight)
     -- Only draw visible entities
