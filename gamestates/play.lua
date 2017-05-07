@@ -18,7 +18,7 @@ function Play:enteredState()
   self.world = Bump.newWorld(conf.cellSize)
 
   -- Load the game map
-  self.map = self:loadMap(self.world, 'resources/maps/map01.lua')
+  self.map = self:loadMap(self.world, 'resources/maps/map02.lua')
 
   -- Load player position from map
   local x,y = self.map.properties['player.x'] * self.map.tilewidth,
@@ -26,21 +26,24 @@ function Play:enteredState()
 
   -- Create the player entity
   self.player = Player:new(self.world, x,y)
-
-  -- Change the world position to the player's position
-  self.world:update(self.player, x,y)
+  -- self.world:update(self.player, x,y)
+  Log.debug('Player position:',self.player.x, self.player.y)
 
   -- Get world map size
   self.worldWidth = self.map.tilewidth * self.map.width
   self.worldHeight = self.map.tileheight * self.map.height
+  Log.debug('Map size in px:',self.worldWidth, self.worldHeight)
 
   -- Create the follow camera. Size of the camera is the size of the map
   self.camera = Gamera.new(0,0, self.worldWidth, self.worldHeight)
-  self.camera:setPosition(x,y)
+  self.camera:setPosition(self.player:getCenter())
+
+  self.camera:setWindow(0,0,conf.width,conf.height)
+  Log.debug('camera window',self.camera:getWindow())
 end
 
 function Play:exitedState()
-
+  -- TODO
 end
 
 function Play:loadMap(world, filename)
@@ -49,7 +52,7 @@ function Play:loadMap(world, filename)
   -- Load a map exported to Lua from Tiled.
   -- STI provides a bump plugin but since we don't use tiles we'll use a
   -- custom loader
-  local map = STI('resources/maps/map01.lua')
+  local map = STI(filename)
 
   for _,o in pairs(map.layers['Ground'].objects) do
     table.insert(self.entities, Ground:new(world,o.x,o.y,o.width,o.height))
@@ -60,14 +63,21 @@ end
 
 function Play:draw()
   local items, len
+  Push:start()
+  Push:setCanvas('shader')
   self.camera:draw(function(l,t,w,h)
+    love.graphics.rectangle('line', 0,0, self.worldWidth,self.worldHeight)
+    -- Only draw visible entities
     items,len = self.world:queryRect(l,t,w,h)
     table.sort(items,Entity.sortByZOrder)
     Lume.each(items,'draw')
   end)
+  Push:finish()
 end
 
 function Play:update(dt)
+
+  self:updateShaders(dt)
 
   -- TODO gameover
   if self.player.y > self.worldHeight then
@@ -83,12 +93,10 @@ function Play:update(dt)
   -- TODO smooth the camera. X doesnt work smoothly
   local x,y = self.camera:getPosition()
   local px, py = self.player:getCenter()
-  -- self.camera:setPosition(Lume.lerp(x,self.player.x,0.05),Lume.lerp(y,self.player.y,0.05))
   self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
-  Log.debug('touch pressed')
   if self.isReleased then
     self.player:jump()
   end
