@@ -44,12 +44,11 @@ function Play:enteredState()
   self.camera:setWindow(0,0,conf.width,conf.height)
   Log.debug('camera window',self.camera:getWindow())
 
-  -- shader shift
-  self.shift = 10
-  self.tweenShaderShift = Tween.new(1, self, { shift = 3 })
+  self:pushState('GameplayIn')
 end
 
 function Play:exitedState()
+  Log.info 'Exited state Play'
   -- TODO
 end
 
@@ -93,12 +92,10 @@ function Play:update(dt)
   if player.y > self.worldHeight then
     player.x, player.y = player.cpx, player.cpy
     self.world:update(player,player.x,player.y)
-    self.tweenShaderShift:reset()
-    Beholder.trigger('gameover')
+    Beholder.trigger('Gameover')
   end
 
-  self.tweenShaderShift:update(dt)
-  self:updateShaders(dt, self.shift)
+  self:updateShaders(dt, 3)
 
   -- Update visible entities
   -- TODO add a radius to update outside the visible windows

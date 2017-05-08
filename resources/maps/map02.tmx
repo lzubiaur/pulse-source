@@ -2,7 +2,7 @@
 <map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="8" tilewidth="64" tileheight="64" nextobjectid="23">
  <properties>
   <property name="player.x" type="float" value="2"/>
-  <property name="player.y" type="float" value="4"/>
+  <property name="player.y" type="float" value="6"/>
  </properties>
  <objectgroup name="Ground">
   <object id="5" type="Ground" x="0" y="448" width="640" height="64"/>

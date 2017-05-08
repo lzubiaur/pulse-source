@@ -60,6 +60,7 @@ require 'gamestates.loading'
 require 'gamestates.start'
 require 'gamestates.play'
 require 'gamestates.paused'
+require 'gamestates.transitions'
 
 local game = nil
 
@@ -112,4 +113,11 @@ end
 
 function love.keypressed(key, scancode, isrepeat)
   game:keypressed(key, scancode, isRepeat)
+end
+
+-- TODO android app is put on background/foreground
+function love.focus()
+end
+
+function love.visible(visible)
 end
