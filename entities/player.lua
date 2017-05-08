@@ -9,13 +9,14 @@ local Player = Class('Player', Entity)
 local maxDust = 8
 
 function Player:initialize(world, x,y)
+  print(x,y)
   Lume.extend(self, {
-      impulse = -1000, -- vertical jump impulse
-      jumps = 0, -- jump count (max 2)
-      released = true, -- touch/key has been released
-      dusts = {}, -- dust particles
+      impulse = -1000,      -- vertical jump impulse
+      jumps = 0,            -- jump count (max 2)
+      released = true,      -- touch/key has been released
+      cpx = x, cpy = y,     -- last passed checkpoint
   })
-  -- TODO set player size from map cell size
+  -- TODO set player size from actual map cell size
   Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = 500, mass = 5, zOrder = 1})
 end
 
@@ -34,44 +35,47 @@ function Player:draw()
   love.graphics.points(self:getCenter())
 end
 
-function Player:addDustParticle()
-  local dust = Dust:new(self.world,self.x,self.y)
-  table.insert(self.dusts,dust)
-end
-
-function Player:createDust(col)
+-- TODO limit the dust particle number
+function Player:addDustParticle(col)
   if self.vx > 0 then
     -- TODO dust position
-    -- TODO check remove "dead" dust
-    local dust = Dust:new(self.world,self.x+self.w * love.math.random(),self.y+self.h-10)
-    table.insert(self.dusts,dust)
+    Dust:new(self.world,self.x+self.w * love.math.random(),self.y+self.h-10)
   end
 end
 
 function Player:filter(other)
-  return other:isInstanceOf(Ground) and 'slide' or nil
+  if other:isInstanceOf(Ground) then
+    return 'slide'
+  elseif other.class.name == 'Checkpoint' then
+    return 'cross'
+  end
+  return nil
 end
 
 function Player:update(dt)
-
-  Lume.each(self.dusts,'update',dt)
 
   self:applyGravity(dt)
   self:applyVelocity(dt)
   self:clampVelocity()
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
+  self:checkCollisions(len, cols)
+end
 
-  if len > 0 then
-    for i=1,len do
-      local col = cols[i]
-      if col.other:isInstanceOf(Ground) then
-        self:createDust(col)
-      end
+function Player:checkCollisions(len, cols)
+  if len < 1 then return end
+
+  for i=1,len do
+    local col = cols[i]
+    if col.other:isInstanceOf(Ground) then
+      self:addDustParticle()
       -- Decrease jumps count only when player touches ground
       if self.jumps > 0 and col.normal.y < 0 then
         self.jumps = self.jumps - 1
       end
+    elseif col.other.class.name == 'Checkpoint' then
+      print('checkpoint',col.other.x,col.other.y)
+      self.cpx,self.cpy = col.other.x, col.other.y
     end
   end
 end

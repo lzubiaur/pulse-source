@@ -83,9 +83,12 @@ function Play:update(dt)
 
   self:updateShaders(dt)
 
+  local player = self.player
   -- TODO gameover
-  if self.player.y > self.worldHeight then
-    self:gotoState('Start')
+  if player.y > self.worldHeight then
+    -- self:gotoState('Start')
+    player.x, player.y = player.cpx, player.cpy
+    self.world:update(player,player.x,player.y)
   end
 
   -- Update visible entities
@@ -96,7 +99,7 @@ function Play:update(dt)
 
   -- TODO smooth the camera. X doesnt work smoothly
   local x,y = self.camera:getPosition()
-  local px, py = self.player:getCenter()
+  local px, py = player:getCenter()
   self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
 end
 
