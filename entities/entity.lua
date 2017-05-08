@@ -67,6 +67,7 @@ function Entity:update(dt)
   -- nothing
 end
 
+-- debug draw
 function Entity:draw()
   love.graphics.rectangle('line',self.x,self.y,self.w,self.h)
 end

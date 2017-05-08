@@ -4,25 +4,24 @@ local Game   = require 'game'
 local Ground = require 'entities.ground'
 local Player = require 'entities.player'
 local Entity = require 'entities.entity'
+local Checkpoint = require 'entities.checkpoint'
 
 local Play = Game:addState('Play')
 
 function Play:enteredState()
   Log.info 'Entered state "Play"'
 
-  self.gameover = false
   self.isReleased = true -- touch flag to check touch is "repeat"
-  self.entities = {}
 
   -- Create the physics world
   self.world = Bump.newWorld(conf.cellSize)
 
   -- Load the game map
-  self.map = self:loadMap(self.world, 'resources/maps/map02.lua')
+  local map = self:loadMap(self.world, 'resources/maps/map02.lua')
 
   -- Load player position from map
-  local x,y = self.map.properties['player.x'] * self.map.tilewidth,
-              self.map.properties['player.y'] * self.map.tileheight
+  local x,y = map.properties['player.x'] * map.tilewidth,
+              map.properties['player.y'] * map.tileheight
 
   -- Create the player entity
   self.player = Player:new(self.world, x,y)
@@ -30,8 +29,8 @@ function Play:enteredState()
   Log.debug('Player position:',self.player.x, self.player.y)
 
   -- Get world map size
-  self.worldWidth = self.map.tilewidth * self.map.width
-  self.worldHeight = self.map.tileheight * self.map.height
+  self.worldWidth = map.tilewidth * map.width
+  self.worldHeight = map.tileheight * map.height
   Log.debug('Map size in px:',self.worldWidth, self.worldHeight)
 
   -- Create the follow camera. Size of the camera is the size of the map
@@ -56,7 +55,11 @@ function Play:loadMap(world, filename)
   local map = STI(filename)
 
   for _,o in pairs(map.layers['Ground'].objects) do
-    table.insert(self.entities, Ground:new(world,o.x,o.y,o.width,o.height))
+    Ground:new(world,o.x,o.y,o.width,o.height)
+  end
+
+  for _,o in pairs(map.layers['Checkpoint'].objects) do
+    Checkpoint:new(world,o.x,o.y)
   end
 
   return map
