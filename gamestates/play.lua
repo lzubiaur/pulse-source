@@ -11,6 +11,9 @@ local Play = Game:addState('Play')
 function Play:enteredState()
   Log.info 'Entered state "Play"'
 
+  local music = love.audio.newSource('resources/music/keygen_9000.xm')
+  love.audio.play(music)
+
   self.isReleased = true -- touch flag to check touch is "repeat"
 
   -- Create the physics world
@@ -40,6 +43,10 @@ function Play:enteredState()
   -- the actual screen resolution
   self.camera:setWindow(0,0,conf.width,conf.height)
   Log.debug('camera window',self.camera:getWindow())
+
+  -- shader shift
+  self.shift = 10
+  self.tweenShaderShift = Tween.new(1, self, { shift = 3 })
 end
 
 function Play:exitedState()
@@ -81,14 +88,17 @@ end
 
 function Play:update(dt)
 
-  self:updateShaders(dt)
-
   local player = self.player
   -- TODO gameover
   if player.y > self.worldHeight then
     player.x, player.y = player.cpx, player.cpy
     self.world:update(player,player.x,player.y)
+    self.tweenShaderShift:reset()
+    Beholder.trigger('gameover')
   end
+
+  self.tweenShaderShift:update(dt)
+  self:updateShaders(dt, self.shift)
 
   -- Update visible entities
   -- TODO add a radius to update outside the visible windows
@@ -119,6 +129,8 @@ end
 function Play:keypressed(key, scancode, isrepeat)
   if key == 'space' and not isrepeat then
     self.player:jump()
+  elseif key == 'p' then
+    self:pushState('Paused')
   end
 end
 

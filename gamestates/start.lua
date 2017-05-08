@@ -12,7 +12,7 @@ function Start:draw()
 end
 
 function Start:update(dt)
-  self:updateShaders(dt)
+  self:updateShaders(dt,3)
 end
 
 function Start:keypressed(key, isRepeat)

@@ -23,10 +23,10 @@ function Game:initialize()
   self:gotoState('Loading')
 end
 
-function Game:updateShaders(dt)
+function Game:updateShaders(dt,shift)
   time = (time + dt) % 1
-  shader1:send("shift", 2 + math.cos( time * math.pi * 2 ) * .5)
-  shader2:send("time", love.timer.getTime())
+  shader1:send("shift", shift + math.cos( time * math.pi * 2 ) * .5)
+  -- shader2:send("time", love.timer.getTime())
 end
 
 function Game:update(dt)

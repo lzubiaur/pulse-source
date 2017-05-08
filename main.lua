@@ -32,6 +32,7 @@ STI       = require 'modules.sti'
 Tween     = require 'modules.tween'
 Lume      = require 'modules.lume'
 Gamera    = require 'modules.gamera'
+Beholder  = require 'modules.beholder'
 -- Cron      = require 'modules.cron'
 -- BumpDebug not working properly
 -- BumpDebug = require 'modules.bump_debug'
@@ -56,8 +57,9 @@ Log.usecolor = false
 local Game = require 'game'
 -- Load game states after Game
 require 'gamestates.loading'
-require 'gamestates.play'
 require 'gamestates.start'
+require 'gamestates.play'
+require 'gamestates.paused'
 
 local game = nil
 
