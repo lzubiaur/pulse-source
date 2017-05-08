@@ -86,7 +86,6 @@ function Play:update(dt)
   local player = self.player
   -- TODO gameover
   if player.y > self.worldHeight then
-    -- self:gotoState('Start')
     player.x, player.y = player.cpx, player.cpy
     self.world:update(player,player.x,player.y)
   end

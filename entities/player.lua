@@ -6,10 +6,7 @@ local Dust   = require 'entities.dust'
 
 local Player = Class('Player', Entity)
 
-local maxDust = 8
-
 function Player:initialize(world, x,y)
-  print(x,y)
   Lume.extend(self, {
       impulse = -1000,      -- vertical jump impulse
       jumps = 0,            -- jump count (max 2)
@@ -74,7 +71,6 @@ function Player:checkCollisions(len, cols)
         self.jumps = self.jumps - 1
       end
     elseif col.other.class.name == 'Checkpoint' then
-      print('checkpoint',col.other.x,col.other.y)
       self.cpx,self.cpy = col.other.x, col.other.y
     end
   end
