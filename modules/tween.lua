@@ -337,7 +337,7 @@ function Tween:set(clock)
 
   end
 
-  return self.clock >= self.duration
+  return self.clock >= self.duration or self.clock == 0
 end
 
 function Tween:reset()
