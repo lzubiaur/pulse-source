@@ -6,15 +6,17 @@ local GameplayIn = Game:addState('GameplayIn')
 
 function GameplayIn:enteredState()
   Log.info 'Enter state GameplayIn'
-  self.time = 0
+  -- running backwards
+  -- self.progress.tween:set(self.progress.duration)
+  self.progress.tween:reset()
 end
 
 function GameplayIn:update(dt)
-  self.time = self.time + dt
-  if self.time >= 0.5 then self:popState() end
-  self:updateShaders(dt, 10 - self.time)
+  if self.progress.tween:update(dt) then
+    self:popState()
+  end
+  self:updateShaders(dt, self.progress.shift, self.progress.alpha)
   self.camera:setPosition(self.player.x,self.player.y)
-  print 'udpate'
 end
 
 return GameplayIn

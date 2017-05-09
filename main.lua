@@ -33,7 +33,9 @@ Tween     = require 'modules.tween'
 Lume      = require 'modules.lume'
 Gamera    = require 'modules.gamera'
 Beholder  = require 'modules.beholder'
--- Cron      = require 'modules.cron'
+-- Cron      = require 'modules.cron' -- Not used
+-- Chain = require 'modules.knife.chain'
+Timer     = require 'modules.hump.timer'
 -- BumpDebug not working properly
 -- BumpDebug = require 'modules.bump_debug'
 

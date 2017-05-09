@@ -11,6 +11,9 @@ local Play = Game:addState('Play')
 function Play:enteredState()
   Log.info 'Entered state "Play"'
 
+  -- Must clear the timer on entering the scene or old timer will still running
+  Timer.clear()
+
   local music = love.audio.newSource('resources/music/keygen_9000.xm')
   love.audio.play(music)
 
@@ -95,7 +98,7 @@ function Play:update(dt)
     Beholder.trigger('Gameover')
   end
 
-  self:updateShaders(dt, 3)
+  self:updateShaders(dt,3,1)
 
   -- Update visible entities
   -- TODO add a radius to update outside the visible windows
