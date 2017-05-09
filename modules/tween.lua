@@ -337,6 +337,7 @@ function Tween:set(clock)
 
   end
 
+  -- LZU hack to return 'completed' when running backwards
   return self.clock >= self.duration or self.clock == 0
 end
 
