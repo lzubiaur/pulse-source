@@ -11,12 +11,18 @@ function GameplayIn:enteredState()
   self.progress.tween:reset()
 end
 
+function GameplayIn:exitedState()
+  Log.info 'Exited state GameplayIn'
+end
+
 function GameplayIn:update(dt)
   if self.progress.tween:update(dt) then
     self:popState()
   end
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
-  self.camera:setPosition(self.player.x,self.player.y)
+  local x,y = self.camera:getPosition()
+  local px, py = self.player:getCenter()
+  self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
 end
 
 return GameplayIn

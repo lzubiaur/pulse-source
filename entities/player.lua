@@ -32,14 +32,6 @@ function Player:draw()
   love.graphics.points(self:getCenter())
 end
 
--- TODO limit the dust particle number
-function Player:addDustParticle(col)
-  if self.vx > 0 then
-    -- TODO dust position
-    Dust:new(self.world,self.x+self.w * love.math.random(),self.y+self.h-10)
-  end
-end
-
 function Player:filter(other)
   if other:isInstanceOf(Ground) then
     return 'slide'
@@ -56,16 +48,17 @@ function Player:update(dt)
   self:clampVelocity()
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
-  self:checkCollisions(len, cols)
+  self:checkCollisions(dt, len, cols)
+  print(self.x,self.y)
 end
 
-function Player:checkCollisions(len, cols)
+function Player:checkCollisions(dt,len, cols)
   if len < 1 then return end
 
   for i=1,len do
     local col = cols[i]
     if col.other:isInstanceOf(Ground) then
-      self:addDustParticle()
+      Dust.updateParticle(dt,self.world,self.x + self.w * love.math.random(), self.y + self.h - 10)
       -- Decrease jumps count only when player touches ground
       if self.jumps > 0 and col.normal.y < 0 then
         self.jumps = self.jumps - 1

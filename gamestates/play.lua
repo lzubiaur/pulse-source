@@ -41,7 +41,8 @@ function Play:enteredState()
 
   -- Create the follow camera. Size of the camera is the size of the map
   self.camera = Gamera.new(0,0, self.worldWidth, self.worldHeight)
-  self.camera:setPosition(self.player:getCenter())
+  -- local x,y = self.player:getCenter()
+  -- self.camera:setPosition(x + 250,y)
   -- Camera window must be set to the game resolution and not the
   -- the actual screen resolution
   self.camera:setWindow(0,0,conf.width,conf.height)
@@ -89,6 +90,8 @@ function Play:draw()
 end
 
 function Play:update(dt)
+
+  Timer.update(dt)
 
   local player = self.player
   -- TODO gameover

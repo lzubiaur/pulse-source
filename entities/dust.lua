@@ -1,63 +1,62 @@
 -- dust.lua
 
 local Entity = require 'entities.entity'
-local Ground = require 'entities.ground'
 
 local Dust = Class('Dust', Entity)
 
 local random = love.math.random
 
+-- Private variables
 local maxWidth = 10
 local maxHeight = 10
 local maxvx = 100
 local maxvy = 500
-local count = 0
+local elapsed = 0
+local emirate = 10 -- emission rate: Amount of particles emitted per second
+local lifetime = 0.4
+local size = 10 -- max number of active particles
+local count = 0 -- current number of particles
 
-function Dust:initialize(world,x,y)
-  Lume.extend(self,{
-    dead = false,
-    lived = 0, lifetime =1,
-  })
-  -- self.dx, self.dy = -1,1
+-- Static methods
+function Dust.updateParticle(dt,world,x,y)
+  elapsed = elapsed + dt
+  if count < size and elapsed >= 1 / emirate then
+    elapsed,count = 0, count + 1
+    Dust:new(world,x,y,lifetime)
+  end
+end
+
+function Dust:initialize(world,x,y,lifetime)
   Entity.initialize(self,
     world, x,y,
     love.math.random() * maxWidth,
     love.math.random() * maxHeight,
     { mass = 5, vx = -love.math.random() * maxvx, vy = -love.math.random() * maxvy})
-  count = count + 1
+
+  Timer.after(lifetime,function()
+    count = count - 1
+    self:destroy()
+  end)
+
 end
 
 function Dust:filter(other)
-  if other:isInstanceOf(Ground) then
-    return 'bounce'
-  end
-  return nil
+  return other.class.name == 'Ground' and 'bounce' or nil
 end
 
-function Dust:getCount()
+function Dust.getCount()
   return count
 end
 
 function Dust:update(dt)
-  if self.dead then return end
-
-  self.lived = self.lived + dt
-  if self.lived >= self.lifetime then
-    self.dead = true
-    self:destroy()
-    count = count -1
-    return
-  end
-
   self:applyGravity(dt)
-  self:applyVelocity(dt)
   self:clampVelocity()
+  self:applyVelocity(dt)
 
-  local x,y,cols,len = self.world:move(self, self.x,self.y, Dust.filter)
+  self.x,self.y,cols,len = self.world:move(self, self.x,self.y, Dust.filter)
   for i=1,len do
     local col = cols[i]
-    -- TODO doesnt work if bounciness is smaller than 1
-    self:applyCollisionNormal(col.normal.x,col.normal.y,0.9)
+    self:applyCollisionNormal(col.normal.x,col.normal.y,2)
   end
 end
 
