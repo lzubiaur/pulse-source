@@ -24,10 +24,18 @@ function Player:jump()
   end
 end
 
+function Player:setPositionToCheckPoint()
+  self.x, self.y = self.cpx, self.cpy
+  self.world:update(self,self.x,self.y)
+end
+
 function Player:draw()
   local r,g,b,a = love.graphics.getColor()
   love.graphics.setColor(0, 255, 0, 255)
+  -- love.graphics.push()
   love.graphics.rectangle('line', self.x,self.y, self.w,self.h)
+  -- love.graphics.rotate(0.5)
+  -- love.graphics.pop()
   love.graphics.setColor(r,g,b,a)
   love.graphics.points(self:getCenter())
 end
@@ -49,7 +57,6 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
-  print(self.x,self.y)
 end
 
 function Player:checkCollisions(dt,len, cols)
@@ -58,6 +65,7 @@ function Player:checkCollisions(dt,len, cols)
   for i=1,len do
     local col = cols[i]
     if col.other:isInstanceOf(Ground) then
+      -- TODO create dust only when touching the ground and is moving
       Dust.updateParticle(dt,self.world,self.x + self.w * love.math.random(), self.y + self.h - 10)
       -- Decrease jumps count only when player touches ground
       if self.jumps > 0 and col.normal.y < 0 then

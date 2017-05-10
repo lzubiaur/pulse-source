@@ -2,12 +2,12 @@
 
 local Game = require 'game'
 
+-- GameplayIn
+
 local GameplayIn = Game:addState('GameplayIn')
 
 function GameplayIn:enteredState()
   Log.info 'Enter state GameplayIn'
-  -- running backwards
-  -- self.progress.tween:set(self.progress.duration)
   self.progress.tween:reset()
 end
 
@@ -25,4 +25,24 @@ function GameplayIn:update(dt)
   self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
 end
 
-return GameplayIn
+-- GameplayOut
+
+local GameplayOut = Game:addState('GameplayOut')
+
+function GameplayOut:enteredState()
+  Log.info 'Enter state GameplayOut'
+  -- running backwards
+  self.progress.tween:set(self.progress.duration)
+end
+
+function GameplayOut:exitedState()
+  Log.info 'Exited state GameplayOut'
+end
+
+function GameplayOut:update(dt)
+  if self.progress.tween:update(-dt) then
+    self:popState()
+    Beholder.trigger('ResetGame')
+  end
+  self:updateShaders(dt, self.progress.shift, self.progress.alpha)
+end

@@ -48,6 +48,9 @@ function Play:enteredState()
   self.camera:setWindow(0,0,conf.width,conf.height)
   Log.debug('camera window',self.camera:getWindow())
 
+  Beholder.observe('Gameover',function() self:onGameOver() end)
+  Beholder.observe('ResetGame',function() self:onResetGame() end)
+
   self:pushState('GameplayIn')
 end
 
@@ -89,6 +92,16 @@ function Play:draw()
   Push:finish()
 end
 
+function Play:onGameOver()
+  self:pushState('GameplayOut')
+end
+
+function Play:onResetGame()
+  print 'onResetGame'
+  self.player:setPositionToCheckPoint()
+  self:pushState('GameplayIn')
+end
+
 function Play:update(dt)
 
   Timer.update(dt)
@@ -96,8 +109,6 @@ function Play:update(dt)
   local player = self.player
   -- TODO gameover
   if player.y > self.worldHeight then
-    player.x, player.y = player.cpx, player.cpy
-    self.world:update(player,player.x,player.y)
     Beholder.trigger('Gameover')
   end
 
