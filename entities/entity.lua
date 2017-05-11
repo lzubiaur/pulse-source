@@ -24,6 +24,13 @@ function Entity:getCenter()
   return self.x + self.w / 2, self.y + self.h / 2
 end
 
+function Entity:getCenterToScreen()
+  if game.camera then
+    return game.camera:toScreen(self:getCenter())
+  end
+  return self:getCenter()
+end
+
 function Entity:applyGravity(dt)
   self.vy = self.vy + self.mass * conf.gravity * dt
   return self.vy

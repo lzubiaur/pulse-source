@@ -22,7 +22,7 @@ function GameplayIn:update(dt)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
   local x,y = self.camera:getPosition()
   local px, py = self.player:getCenter()
-  self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
+  self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
 end
 
 -- GameplayOut

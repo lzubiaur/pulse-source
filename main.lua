@@ -14,9 +14,10 @@ conf = {
   -- Run on a mobile platform?
   mobileBuild = platform == 'Android' or platform == 'iOS',
   -- vertical gravity
-  gravity = 1000
+  gravity = 1000,
   -- camera
   -- TODO add camera parameters (camera borders, smooth/lerp)
+  camOffsetX = 150, -- offset from the player
 }
 
 -- Load 3rd party libraries/modules globally.
@@ -38,6 +39,9 @@ Beholder  = require 'modules.beholder'
 Timer     = require 'modules.hump.timer'
 -- BumpDebug not working properly
 -- BumpDebug = require 'modules.bump_debug'
+
+-- Love2D shortcuts
+gfx = love.graphics
 
 -- Load LoveDebug module
 -- if conf.build == 'debug' then
@@ -64,7 +68,8 @@ require 'gamestates.play'
 require 'gamestates.paused'
 require 'gamestates.transitions'
 
-local game = nil
+-- The game instance
+game = nil
 
 function love.load()
   -- Avoid anti-alising/blur when scaling. Useful for pixel art.

@@ -30,14 +30,12 @@ function Player:setPositionToCheckPoint()
 end
 
 function Player:draw()
-  local r,g,b,a = love.graphics.getColor()
-  love.graphics.setColor(0, 255, 0, 255)
-  -- love.graphics.push()
-  love.graphics.rectangle('line', self.x,self.y, self.w,self.h)
-  -- love.graphics.rotate(0.5)
-  -- love.graphics.pop()
-  love.graphics.setColor(r,g,b,a)
-  love.graphics.points(self:getCenter())
+  local x,y,w,h = self.x,self.y,self.w,self.h
+  -- TODO doesn't work
+  -- gfx.translate(self:getCenterToScreen())
+  -- gfx.rotate(math.rad(45))
+  gfx.setColor(255, 255, 0, 255)
+  gfx.rectangle('line', x, y, w, h)
 end
 
 function Player:filter(other)

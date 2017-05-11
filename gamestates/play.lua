@@ -40,13 +40,18 @@ function Play:enteredState()
   Log.debug('Map size in px:',self.worldWidth, self.worldHeight)
 
   -- Create the follow camera. Size of the camera is the size of the map
-  self.camera = Gamera.new(0,0, self.worldWidth, self.worldHeight)
+  -- Add an offset to the left to avoid a jump in the camera when starting
+  -- if the player is at the very left
+  self.camera = Gamera.new(-100,0, self.worldWidth, self.worldHeight)
   -- local x,y = self.player:getCenter()
   -- self.camera:setPosition(x + 250,y)
   -- Camera window must be set to the game resolution and not the
   -- the actual screen resolution
   self.camera:setWindow(0,0,conf.width,conf.height)
   Log.debug('camera window',self.camera:getWindow())
+
+  local px, py = self.player:getCenter()
+  self.camera:setPosition(x + conf.camOffsetX, y)
 
   Beholder.observe('Gameover',function() self:onGameOver() end)
   Beholder.observe('ResetGame',function() self:onResetGame() end)
@@ -56,7 +61,8 @@ end
 
 function Play:exitedState()
   Log.info 'Exited state Play'
-  -- TODO
+  -- TODO clean up?
+  Timer.clear()
 end
 
 function Play:loadMap(world, filename)
@@ -97,7 +103,7 @@ function Play:onGameOver()
 end
 
 function Play:onResetGame()
-  print 'onResetGame'
+  print 'Catch event: onResetGame'
   self.player:setPositionToCheckPoint()
   self:pushState('GameplayIn')
 end
@@ -123,7 +129,7 @@ function Play:update(dt)
   -- TODO smooth the camera. X doesnt work smoothly
   local x,y = self.camera:getPosition()
   local px, py = player:getCenter()
-  self.camera:setPosition(px + 250, Lume.lerp(y,py,0.05))
+  self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
