@@ -1,6 +1,8 @@
 # Create the game zip. Must not contain the root folder
 zip -r build/game.love game.lua	main.lua resources conf.lua entities gamestates modules
 
+adb shell am force-stop "org.love2d.android"
+
 # Upload the app on the sdcard
 adb push build/game.love /sdcard/game.love
 
