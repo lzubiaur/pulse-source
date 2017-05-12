@@ -38,18 +38,22 @@ function Start:update(dt)
   Timer.update(dt)
 end
 
+function Start:fadeout()
+  self.progress.dir = -1
+  self.timer = Timer.after(self.progress.duration,function()
+    self:gotoState('Play')
+  end)
+end
+
 function Start:keypressed(key, scancode, isRepeat)
   if self.touchEnabled and not isRepeat then
     self.touchEnabled = false
-    self.progress.dir = -1
-    self.timer = Timer.after(self.progress.duration,function()
-      self:gotoState('Play')
-    end)
+    self:fadeout()
   end
 end
 
 function Start:touchreleased()
-  self.progress.dir = -1
+  self:fadeout()
 end
 
 return Start
