@@ -103,8 +103,8 @@ function Play:onGameOver()
 end
 
 function Play:onResetGame()
-  print 'Catch event: onResetGame'
-  self.player:setPositionToCheckPoint()
+  Log.info('Catch event: onResetGame')
+  self.player:goToCheckPoint()
   self:pushState('GameplayIn')
 end
 
