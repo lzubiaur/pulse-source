@@ -25,6 +25,10 @@ function GameplayIn:update(dt)
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
 end
 
+function GameplayIn:keypressed(key, scancode, isRepeat)
+  -- disable touche
+end
+
 -- GameplayOut
 
 local GameplayOut = Game:addState('GameplayOut')
@@ -45,4 +49,8 @@ function GameplayOut:update(dt)
     Beholder.trigger('ResetGame')
   end
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
+end
+
+function GameplayOut:keypressed(key, scancode, isRepeat)
+  -- disable touches
 end

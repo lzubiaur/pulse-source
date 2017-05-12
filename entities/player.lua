@@ -15,15 +15,19 @@ function Player:initialize(world, x,y)
       angle = 0,                -- Current angle in degree
   })
   -- TODO set player size from actual map cell size
-  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = 500, mass = 5, zOrder = 1})
+  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = conf.playerVelocity, mass = 5, zOrder = 1})
   self.rotTween = Tween.new(0.3,self,{angle = 90})
+  self.longRotTween = Tween.new(0.3,self,{angle = 180})
 end
 
 function Player:jump()
   if self.jumps < 2 then
     self.vy = self.impulse
     self.jumps = self.jumps + 1
-    self.rotTween:reset()
+    if self.jumps == 2 then
+      self.longRotTween = nil
+      self.longRotTween = Tween.new(0.3,self,{angle = 180})
+    end
   end
 end
 
@@ -35,12 +39,16 @@ end
 function Player:draw()
   -- print(self:getCenterToScreen()) -- TODO why first x is different?
   gfx.setColor(255, 255, 0, 255)
-  gfx.push()
-    local ox,oy = self:getCenter()
-    gfx.translate(ox,oy)
-    gfx.rotate(math.rad(self.angle))
-    gfx.rectangle('line', -self.w/2,-self.h/2,self.w,self.h)
-  gfx.pop()
+  if self.angle == 0 then
+    gfx.rectangle('line', self.x,self.y,self.w,self.h)
+  else
+    gfx.push()
+      local ox,oy = self:getCenter()
+      gfx.translate(ox,oy)
+      gfx.rotate(math.rad(self.angle))
+      gfx.rectangle('line', -self.w/2,-self.h/2,self.w,self.h)
+    gfx.pop()
+  end
 end
 
 function Player:filter(other)
@@ -53,8 +61,11 @@ function Player:filter(other)
 end
 
 function Player:rotate(dt)
-  if self.jumps == 0 then return end
-  self.rotTween:update(dt)
+  if self.jumps == 1 then
+    self.rotTween:update(dt)
+  elseif self.jumps == 2 then
+    self.longRotTween:update(dt)
+  end
 end
 
 function Player:update(dt)
@@ -78,6 +89,8 @@ function Player:checkCollisions(dt,len, cols)
       Dust.updateParticle(dt,self.world,self.x + self.w * love.math.random(), self.y + self.h - 10)
       -- Decrease jumps count only when player touches ground
       if self.jumps > 0 and col.normal.y < 0 then
+        self.rotTween:reset()
+        self.longRotTween:reset()
         self.angle = 0
         self.jumps = self.jumps - 1
       end

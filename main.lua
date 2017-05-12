@@ -18,6 +18,8 @@ conf = {
   -- camera
   -- TODO add camera parameters (camera borders, smooth/lerp)
   camOffsetX = 150, -- offset from the player
+  -- Player
+  playerVelocity = 500,
 }
 
 -- Load 3rd party libraries/modules globally.
