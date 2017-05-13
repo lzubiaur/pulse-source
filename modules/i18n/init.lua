@@ -176,7 +176,10 @@ function i18n.load(data)
 end
 
 function i18n.loadFile(path)
-  local chunk = assert(loadfile(path))
+  -- LZU use love.filesystem.load instead of loadfile
+  -- because loadfile doesnt work on Android
+  -- local chunk = assert(loadfile(path))
+  local chunk = assert(love.filesystem.load(path))
   local data = chunk()
   i18n.load(data)
 end
