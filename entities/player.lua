@@ -38,16 +38,18 @@ end
 
 function Player:draw()
   -- print(self:getCenterToScreen()) -- TODO why first x is different?
-  gfx.setColor(255, 255, 0, 255)
+  g.setColor(to_rgb(palette.main))
   if self.angle == 0 then
-    gfx.rectangle('line', self.x,self.y,self.w,self.h)
+    g.rectangle('line', self.x,self.y,self.w,self.h)
+    g.rectangle('fill', self.x+10,self.y+10,self.w-20,self.h-20)
   else
-    gfx.push()
+    g.push()
       local ox,oy = self:getCenter()
-      gfx.translate(ox,oy)
-      gfx.rotate(math.rad(self.angle))
-      gfx.rectangle('line', -self.w/2,-self.h/2,self.w,self.h)
-    gfx.pop()
+      g.translate(ox,oy)
+      g.rotate(math.rad(self.angle))
+      g.rectangle('line', -self.w/2,-self.h/2,self.w,self.h)
+      g.rectangle('fill', -self.w/2+10,-self.h/2+10,self.w-20,self.h-20)
+    g.pop()
   end
 end
 

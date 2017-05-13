@@ -1,6 +1,10 @@
 # Create the game zip. Must not contain the root folder
 zip -r build/game.love game.lua	main.lua resources conf.lua entities gamestates modules
 
+# Unlock the screen
+adb shell input keyevent 82
+adb shell input swipe 100 100 800 200
+
 adb shell am force-stop "org.love2d.android"
 
 # Upload the app on the sdcard

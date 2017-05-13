@@ -3,22 +3,24 @@
 local Game = Class('Game'):include(Stateful)
 
 local time = 0
-local shader1, shader2
+local kaleidoscope, scanlines
 
 function Game:initialize()
-  shader1 = love.graphics.newShader("resources/shaders/shader1.fs")
-  shader2 = love.graphics.newShader("resources/shaders/shader2.fs")
+  kaleidoscope = love.graphics.newShader("resources/shaders/kaleidoscope.glsl")
+  scanlines = love.graphics.newShader("resources/shaders/scanlines.glsl")
   Push:setupCanvas({
     -- { name = 'noshader' },
-    { name = 'shader1', shader = shader1 },
+    { name = 'kaleidoscope', shader = kaleidoscope },
     -- { name = "shader2", shader = shader2 }
   })
-  -- Push:setShader(shader2) --applied to final render
+  Push:setShader(scanlines) --applied to final render
 
   -- default graphics params
   love.graphics.setLineWidth(8)
   love.graphics.setLineJoin('bevel')
   love.graphics.setPointSize(5)
+
+  i18n.loadFile('resources/i18n.lua')
 
   self:gotoState('Loading')
 end
@@ -26,9 +28,11 @@ end
 function Game:updateShaders(dt,shift,alpha)
   time = (time + dt) % 1
   -- TODO shift
-  shader1:send('shift', shift + math.cos(time * math.pi * 2) * .5)
-  shader1:send('alpha', alpha)
-  -- shader2:send("time", love.timer.getTime())
+  kaleidoscope:send('shift', shift + math.cos(time * math.pi * 2) * .5)
+  kaleidoscope:send('alpha', alpha)
+
+  scanlines:send('time', love.timer.getTime())
+  scanlines:send('strength', 10)
 end
 
 function Game:update(dt)

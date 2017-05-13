@@ -20,6 +20,10 @@ conf = {
   camOffsetX = 150, -- offset from the player
   -- Player
   playerVelocity = 500,
+  -- color
+  hueOffset = 72,
+  --
+  shaderShift = 3,
 }
 
 -- Load 3rd party libraries/modules globally.
@@ -38,17 +42,84 @@ Gamera    = require 'modules.gamera'
 Beholder  = require 'modules.beholder'
 -- Cron      = require 'modules.cron' -- Not used
 -- Chain = require 'modules.knife.chain'
+i18n      = require 'modules.i18n'
 Timer     = require 'modules.hump.timer'
--- BumpDebug not working properly
--- BumpDebug = require 'modules.bump_debug'
+HUE       = require 'modules.colors'
 
 -- Love2D shortcuts
-gfx = love.graphics
+g = love.graphics
 
 -- Load LoveDebug module
 -- if conf.build == 'debug' then
 --   LoveDebug = require 'modules.lovedebug'
 -- end
+
+local c = HUE.new("#72f63f")
+
+function createPalette(c)
+  local t1,t2 = c:triadic()
+  return {
+    bg   = t2,
+    base = c,
+    main = c:desaturate_by(.7),
+    line = c:desaturate_by(.5),
+    fill = c:desaturate_by(.2),
+  }
+end
+
+function offsetHuePalette(o)
+  for k,v in pairs(palette) do
+    palette[k] = v:hue_offset(o)
+  end
+end
+
+palette = createPalette(c)
+
+-- palette = {
+--   bg   = c:complementary(),
+--   text = c:neighbors(180):complementary(),
+--   main = c,
+--   line = c:neighbors(180):complementary(),
+-- }
+
+
+function to_rgb(color)
+  return Lume.color(color:to_rgb(),256)
+end
+
+-- Monochrome pastel
+-- palette = {
+--   bg    = { Lume.color("#333333",256) },
+--   text  = { Lume.color("#fefef7",256) },
+--   main  = { Lume.color("#fefef7",256) },
+--   line  = { Lume.color("#fefef7",256) },
+--   fill  = { Lume.color("#333333",256) },
+-- }
+
+-- -- GameBoy (pastel)
+-- palette = {
+--   bg    = { Lume.color("#1c3939",256) },
+--   text  = { Lume.color("#d5eaa2",256) },
+--   main  = { Lume.color("#d5eaa2",256) },
+--   line  = { Lume.color("#26755c",256) },
+--   fill  = { Lume.color("#62b779",256) },
+-- }
+
+-- Gameboy (Green)
+-- palette = {
+--   bg    = { Lume.color("#204630",256) },
+--   text  = { Lume.color("#d9e78f",256) },
+--   main  = { Lume.color("#b0c332",256) },
+--   minor = { Lume.color("#537e34",256) },
+-- }
+
+-- Retro
+-- palette = {
+--   bg    = { Lume.color("#83ae9a",256) },
+--   text  = { Lume.color("#facdac",256) },
+--   main  = { Lume.color("#ff4a66",256) },
+--   minor = { Lume.color("#facdac",256) },
+-- }
 
 -- Log level
 Log.level = conf.build == 'debug' and 'debug' or 'warn'
@@ -77,7 +148,8 @@ function love.load()
   -- Avoid anti-alising/blur when scaling. Useful for pixel art.
   -- love.graphics.setDefaultFilter('nearest', 'nearest', 0)
 
-  love.graphics.setBackgroundColor(0,0,0)
+  -- setBackgroundColor doesnt work with push
+  -- love.graphics.setBackgroundColor(0,0,0)
 
   -- Gets the width and height of the window
   local w,h = love.graphics.getDimensions()

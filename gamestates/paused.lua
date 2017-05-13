@@ -6,7 +6,7 @@ local Game = require 'game'
 local Paused = Game:addState('Paused')
 
 function Paused:update(dt)
-  self:updateShaders(dt, 3)
+  self:updateShaders(dt, 3, 1)
 end
 
 function Paused:keypressed(key, scancode, isrepeat)

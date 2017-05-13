@@ -14,8 +14,9 @@ function Play:enteredState()
   -- Must clear the timer on entering the scene or old timer will still running
   Timer.clear()
 
-  local music = love.audio.newSource('resources/music/keygen_9000.xm')
-  love.audio.play(music)
+  -- TODO crashes sometimes on android (file not found)
+  -- local music = love.audio.newSource('resources/music/keygen_9000.xm')
+  -- love.audio.play(music)
 
   self.isReleased = true -- touch flag to check touch is "repeat"
 
@@ -87,7 +88,7 @@ end
 function Play:draw()
   local items, len
   Push:start()
-  Push:setCanvas('shader1')
+  g.clear(to_rgb(palette.bg))
   self.camera:draw(function(l,t,w,h)
     love.graphics.rectangle('line', 0,0, self.worldWidth,self.worldHeight)
     -- Only draw visible entities
@@ -118,7 +119,7 @@ function Play:update(dt)
     Beholder.trigger('Gameover')
   end
 
-  self:updateShaders(dt,3,1)
+  self:updateShaders(dt,conf.shaderShift,1)
 
   -- Update visible entities
   -- TODO add a radius to update outside the visible windows
@@ -151,6 +152,8 @@ function Play:keypressed(key, scancode, isrepeat)
     self.player:jump()
   elseif key == 'p' then
     self:pushState('Paused')
+  elseif key == 'c' then
+    offsetHuePalette(conf.hueOffset)
   end
 end
 

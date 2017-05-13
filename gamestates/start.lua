@@ -9,7 +9,7 @@ function Start:enteredState()
 
   self.progress = {
     alpha = 0,
-    shift = 50,
+    shift = 80,
     dir = 1, -- tween directions (1: forewards, 2:backwards)
     duration = 1,
   }
@@ -17,7 +17,7 @@ function Start:enteredState()
   self.progress.tween = Tween.new(
     self.progress.duration,
     self.progress,
-    { alpha = 1, shift = 3 },
+    { alpha = 1, shift = conf.shaderShift },
     'inOutCubic')
 
   Timer.after(0.5,function() self.touchEnabled = true end)
@@ -26,13 +26,16 @@ end
 
 function Start:draw()
   Push:start()
-    love.graphics.rectangle('line',0,0,conf.width,conf.height)
-    love.graphics.line(0,180,640,180)
-    love.graphics.print('Push key to start',100,100)
+    g.clear(to_rgb(palette.bg))
+    g.setColor(to_rgb(palette.base))
+    g.rectangle('line',0,0,conf.width,conf.height)
+    g.line(0,180,640,180)
+    g.print(i18n(conf.mobileBuild and 'start_mobile' or 'start_desktop'),100,100)
   Push:finish()
 end
 
 function Start:update(dt)
+
   self.progress.tween:update(self.progress.dir * dt)
   self:updateShaders(dt,self.progress.shift,self.progress.alpha)
   Timer.update(dt)
@@ -47,8 +50,12 @@ end
 
 function Start:keypressed(key, scancode, isRepeat)
   if self.touchEnabled and not isRepeat then
-    self.touchEnabled = false
-    self:fadeout()
+    if key == 'space' then
+      self.touchEnabled = false
+      self:fadeout()
+    elseif key == 'c' then
+      offsetHuePalette(conf.hueOffset)
+    end
   end
 end
 
