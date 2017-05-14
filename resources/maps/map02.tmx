@@ -5,20 +5,17 @@
   <property name="player.y" type="float" value="6"/>
  </properties>
  <objectgroup name="Ground">
-  <object id="5" type="Ground" x="0" y="448" width="640" height="64"/>
-  <object id="8" type="Ground" x="2688" y="384" width="64" height="64"/>
-  <object id="10" type="Ground" x="2944" y="320" width="64" height="128"/>
-  <object id="11" type="Ground" x="3008" y="448" width="1280" height="64"/>
-  <object id="12" type="Ground" x="1088" y="384" width="320" height="64"/>
-  <object id="13" type="Ground" x="1472" y="320" width="64" height="128"/>
-  <object id="14" type="Ground" x="1536" y="256" width="256" height="64"/>
-  <object id="15" type="Ground" x="1920" y="320" width="128" height="128"/>
-  <object id="16" type="Ground" x="2176" y="256" width="64" height="192"/>
-  <object id="17" type="Ground" x="768" y="448" width="448" height="64"/>
-  <object id="18" type="Ground" x="2176" y="448" width="576" height="64"/>
-  <object id="22" type="Checkpoint" x="2432" y="384" width="64" height="64"/>
+  <object id="5" type="Ground" x="0" y="448" width="1920" height="64"/>
+  <object id="10" type="Ground" x="4224" y="320" width="64" height="128"/>
+  <object id="11" type="Ground" x="4288" y="448" width="1280" height="64"/>
+  <object id="12" type="Ground" x="2368" y="384" width="320" height="64"/>
+  <object id="13" type="Ground" x="2752" y="320" width="64" height="128"/>
+  <object id="14" type="Ground" x="2816" y="256" width="256" height="64"/>
+  <object id="15" type="Ground" x="3200" y="320" width="128" height="128"/>
+  <object id="16" type="Ground" x="3456" y="256" width="64" height="192"/>
+  <object id="17" type="Ground" x="2048" y="448" width="448" height="64"/>
+  <object id="18" type="Ground" x="3520" y="320" width="576" height="64"/>
+  <object id="22" type="Checkpoint" x="4544" y="384" width="64" height="64"/>
  </objectgroup>
- <objectgroup name="Checkpoint">
-  <object id="20" type="Checkpoint" x="1216" y="320" width="64" height="64"/>
- </objectgroup>
+ <objectgroup name="Checkpoint"/>
 </map>

@@ -56,7 +56,7 @@ function Dust:update(dt)
   self.x,self.y,cols,len = self.world:move(self, self.x,self.y, Dust.filter)
   for i=1,len do
     local col = cols[i]
-    self:applyCollisionNormal(col.normal.x,col.normal.y,2)
+    self:applyCollisionNormal(col.normal.x,col.normal.y,1.5)
   end
 end
 

@@ -3,17 +3,21 @@
 local Game = Class('Game'):include(Stateful)
 
 local time = 0
-local kaleidoscope, scanlines
+local shader1 = nil
+-- local shader2 = nil
 
 function Game:initialize()
-  kaleidoscope = love.graphics.newShader("resources/shaders/kaleidoscope.glsl")
-  scanlines = love.graphics.newShader("resources/shaders/scanlines.glsl")
-  Push:setupCanvas({
-    -- { name = 'noshader' },
-    { name = 'kaleidoscope', shader = kaleidoscope },
-    -- { name = "shader2", shader = shader2 }
-  })
-  Push:setShader(scanlines) --applied to final render
+  shader1 = love.graphics.newShader("resources/shaders/separate_chroma.glsl")
+  -- shader2 = love.graphics.newShader("resources/shaders/scanlines.glsl")
+  -- Uncomment below to use two post-process effects
+  -- Push:setupCanvas({
+  --   -- { name = 'noshader' }, -- in case we want a no shader canvas
+  --   { name = 'shader1', shader = kaleidoscope },
+  -- })
+  -- Push:setShader(shader2) --applied to final render
+
+  -- In case we only want one shader
+  Push:setShader(shader1)
 
   -- default graphics params
   love.graphics.setLineWidth(8)
@@ -28,11 +32,11 @@ end
 function Game:updateShaders(dt,shift,alpha)
   time = (time + dt) % 1
   -- TODO shift
-  kaleidoscope:send('shift', shift + math.cos(time * math.pi * 2) * .5)
-  kaleidoscope:send('alpha', alpha)
+  shader1:send('shift', shift + math.cos(time * math.pi * 2) * .5)
+  shader1:send('alpha', alpha)
 
-  scanlines:send('time', love.timer.getTime())
-  scanlines:send('strength', 10)
+  -- shader2:send('time', love.timer.getTime())
+  -- shader2:send('strength', 10)
 end
 
 function Game:update(dt)

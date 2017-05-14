@@ -18,7 +18,7 @@ conf = {
   -- camera
   -- TODO add camera parameters (camera borders, smooth/lerp)
   camOffsetX = 150, -- offset from the player
-  -- Player
+  -- Player (default 500)
   playerVelocity = 500,
   -- color
   hueOffset = 72,
@@ -45,6 +45,7 @@ Beholder  = require 'modules.beholder'
 i18n      = require 'modules.i18n'
 Timer     = require 'modules.hump.timer'
 HUE       = require 'modules.colors'
+Parallax  = require 'modules.parallax'
 
 -- Love2D shortcuts
 g = love.graphics
@@ -55,6 +56,7 @@ g = love.graphics
 -- end
 
 local c = HUE.new("#72f63f")
+-- local c = HUE.new("#e871a3")
 
 function createPalette(c)
   local t1,t2 = c:triadic()
@@ -73,53 +75,12 @@ function offsetHuePalette(o)
   end
 end
 
+-- Global
 palette = createPalette(c)
-
--- palette = {
---   bg   = c:complementary(),
---   text = c:neighbors(180):complementary(),
---   main = c,
---   line = c:neighbors(180):complementary(),
--- }
-
 
 function to_rgb(color)
   return Lume.color(color:to_rgb(),256)
 end
-
--- Monochrome pastel
--- palette = {
---   bg    = { Lume.color("#333333",256) },
---   text  = { Lume.color("#fefef7",256) },
---   main  = { Lume.color("#fefef7",256) },
---   line  = { Lume.color("#fefef7",256) },
---   fill  = { Lume.color("#333333",256) },
--- }
-
--- -- GameBoy (pastel)
--- palette = {
---   bg    = { Lume.color("#1c3939",256) },
---   text  = { Lume.color("#d5eaa2",256) },
---   main  = { Lume.color("#d5eaa2",256) },
---   line  = { Lume.color("#26755c",256) },
---   fill  = { Lume.color("#62b779",256) },
--- }
-
--- Gameboy (Green)
--- palette = {
---   bg    = { Lume.color("#204630",256) },
---   text  = { Lume.color("#d9e78f",256) },
---   main  = { Lume.color("#b0c332",256) },
---   minor = { Lume.color("#537e34",256) },
--- }
-
--- Retro
--- palette = {
---   bg    = { Lume.color("#83ae9a",256) },
---   text  = { Lume.color("#facdac",256) },
---   main  = { Lume.color("#ff4a66",256) },
---   minor = { Lume.color("#facdac",256) },
--- }
 
 -- Log level
 Log.level = conf.build == 'debug' and 'debug' or 'warn'
@@ -141,7 +102,7 @@ require 'gamestates.play'
 require 'gamestates.paused'
 require 'gamestates.transitions'
 
--- The game instance
+-- The global game instance
 game = nil
 
 function love.load()
@@ -158,7 +119,7 @@ function love.load()
     fullscreen = conf.mobileBuild,
     resizable = not conf.mobileBuild,
     highdpi = true,
-    canvas = true,
+    canvas = true, -- We need canvas for the separate_chroma shader who works only on texture
     stretched = true, -- Keep aspect ratio or strech to borders
     pixelperfect = false,
   })

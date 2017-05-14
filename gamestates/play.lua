@@ -15,8 +15,8 @@ function Play:enteredState()
   Timer.clear()
 
   -- TODO crashes sometimes on android (file not found)
-  -- local music = love.audio.newSource('resources/music/keygen_9000.xm')
-  -- love.audio.play(music)
+  local music = love.audio.newSource('resources/music/keygen_9000.xm')
+  love.audio.play(music)
 
   self.isReleased = true -- touch flag to check touch is "repeat"
 
@@ -54,6 +54,16 @@ function Play:enteredState()
   local px, py = self.player:getCenter()
   self.camera:setPosition(x + conf.camOffsetX, y)
 
+  self.parallax = Parallax(conf.width,conf.height, {offsetX = 0, offsetY = 0})
+  self.parallax:addLayer('layer0',1,{relativeScale=0.2})
+  self.parallax:addLayer('layer1',1,{relativeScale=0.4})
+  self.parallax:addLayer('layer2',1,{relativeScale=0.8})
+
+  self.vertices = {}
+  for i=1,3 do
+    table.insert(self.vertices,self:generateBackground())
+  end
+
   Beholder.observe('Gameover',function() self:onGameOver() end)
   Beholder.observe('ResetGame',function() self:onResetGame() end)
 
@@ -85,17 +95,46 @@ function Play:loadMap(world, filename)
   return map
 end
 
+function Play:generateBackground()
+  local t,x,y,dx,dy,i = {},0,self.worldHeight-200,1,{0,-1,0,1},1
+  local rand = love.math.random
+  while true do
+    x = x + dx * (100 * rand() + 100)
+    y = y + dy[i] * 50 * rand()
+    Lume.push(t,x,y)
+    i = i < 4 and i + 1 or 1
+    dx = dx == 0 and 1 or 0
+    if x >= self.worldWidth then break end
+  end
+  return t
+end
+
+function Play:drawParallax()
+  g.setColor(255,255,255,32)
+  self.parallax:push('layer0')
+    g.line(self.vertices[1])
+  self.parallax:pop()
+  self.parallax:push('layer1')
+    g.line(self.vertices[2])
+  self.parallax:pop()
+  self.parallax:push('layer2')
+    g.line(self.vertices[3])
+  self.parallax:pop()
+end
+
 function Play:draw()
-  local items, len
   Push:start()
   g.clear(to_rgb(palette.bg))
+
+  self:drawParallax()
+
   self.camera:draw(function(l,t,w,h)
-    love.graphics.rectangle('line', 0,0, self.worldWidth,self.worldHeight)
     -- Only draw visible entities
-    items,len = self.world:queryRect(l,t,w,h)
+    local items,len = self.world:queryRect(l,t,w,h)
     table.sort(items,Entity.sortByZOrder)
     Lume.each(items,'draw')
   end)
+  g.print('FPS:'..tostring(love.timer.getFPS()),10,10)
   Push:finish()
 end
 
@@ -131,6 +170,8 @@ function Play:update(dt)
   local x,y = self.camera:getPosition()
   local px, py = player:getCenter()
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
+  self.parallax:setTranslation(px,py)
+  -- self.parallax:update(dt)
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
