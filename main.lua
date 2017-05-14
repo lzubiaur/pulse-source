@@ -157,9 +157,18 @@ function love.keypressed(key, scancode, isrepeat)
   game:keypressed(key, scancode, isRepeat)
 end
 
+-- TODO save/restore session
 -- TODO android app is put on background/foreground
 function love.focus()
 end
 
 function love.visible(visible)
+end
+
+function love.quit()
+  Log.info('Quit app')
+end
+
+function love.lowmemory()
+  Log.warn('System is out of memory')
 end
