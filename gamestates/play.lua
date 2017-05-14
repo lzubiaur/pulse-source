@@ -5,6 +5,7 @@ local Ground = require 'entities.ground'
 local Player = require 'entities.player'
 local Entity = require 'entities.entity'
 local Checkpoint = require 'entities.checkpoint'
+local Enemy = require 'entities.enemy'
 
 local Play = Game:addState('Play')
 
@@ -89,12 +90,19 @@ function Play:loadMap(world, filename)
   end
 
   for _,o in pairs(map.layers['Checkpoint'].objects) do
-    Checkpoint:new(world,o.x,o.y)
+    if o.type == 'Checkpoint' then
+      Checkpoint:new(world,o.x,o.y)
+    elseif o.type == 'Spike' then
+      Enemy:new(world,o.x,o.y)
+    else
+      Log.warn('Unknow type:',o.type)
+    end
   end
 
   return map
 end
 
+-- TODO check layer relative scale
 function Play:generateBackground()
   local t,x,y,dx,dy,i = {},0,self.worldHeight-200,1,{0,-1,0,1},1
   local rand = love.math.random
@@ -139,6 +147,7 @@ function Play:draw()
 end
 
 function Play:onGameOver()
+  Log.info('GAME OVER!')
   self:pushState('GameplayOut')
 end
 

@@ -8,7 +8,7 @@ local Player = Class('Player', Entity)
 
 function Player:initialize(world, x,y)
   Lume.extend(self, {
-      impulse = -conf.gravity,  -- vertical jump impulse
+      impulse = -(conf.gravity + 800),  -- vertical jump impulse
       jumps = 0,                -- jump count (max 2)
       released = true,          -- touch/key has been released
       cpx = x, cpy = y,         -- last passed checkpoint
@@ -18,6 +18,15 @@ function Player:initialize(world, x,y)
   Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = conf.playerVelocity, mass = 5, zOrder = 1})
   self.rotTween = Tween.new(0.3,self,{angle = 90})
   self.longRotTween = Tween.new(0.3,self,{angle = 180})
+
+  Beholder.observe('ResetGame',function() self:onResetGame() end)
+end
+
+function Player:onResetGame()
+  Log.info('Reset Player')
+  self.rotTween:reset()
+  self.jumps,self.angle = 0,0
+  self.impulse = -(conf.gravity + 800)
 end
 
 function Player:jump()
@@ -57,6 +66,8 @@ function Player:filter(other)
   if other:isInstanceOf(Ground) then
     return 'slide'
   elseif other.class.name == 'Checkpoint' then
+    return 'cross'
+  elseif other.class.name == 'Enemy' then
     return 'cross'
   end
   return nil
@@ -98,6 +109,8 @@ function Player:checkCollisions(dt,len, cols)
       end
     elseif col.other.class.name == 'Checkpoint' then
       self.cpx,self.cpy = col.other.x, col.other.y
+    elseif col.other.class.name == 'Enemy' then
+      Beholder.trigger('Gameover')
     end
   end
 end
