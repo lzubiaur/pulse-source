@@ -8,11 +8,11 @@ local Player = Class('Player', Entity)
 
 function Player:initialize(world, x,y)
   Lume.extend(self, {
-      impulse = -(conf.gravity + 800),  -- vertical jump impulse
-      jumps = 0,                -- jump count (max 2)
-      released = true,          -- touch/key has been released
-      cpx = x, cpy = y,         -- last passed checkpoint
-      angle = 0,                -- Current angle in degree
+      impulse = conf.playerImpulse, -- vertical jump impulse
+      jumps = 0,                    -- jump count (max 2)
+      released = true,              -- touch/key has been released
+      cpx = x, cpy = y,             -- last passed checkpoint
+      angle = 0,                    -- Current angle in degree
   })
   -- TODO set player size from actual map cell size
   Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = conf.playerVelocity, mass = 5, zOrder = 1})
@@ -25,8 +25,9 @@ end
 function Player:onResetGame()
   Log.info('Reset Player')
   self.rotTween:reset()
+  self.longRotTween:reset()
   self.jumps,self.angle = 0,0
-  self.impulse = -(conf.gravity + 800)
+  self.impulse = conf.playerImpulse
 end
 
 function Player:jump()
@@ -90,6 +91,7 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
+  Debug.update('vy',self.vy)
 end
 
 function Player:checkCollisions(dt,len, cols)

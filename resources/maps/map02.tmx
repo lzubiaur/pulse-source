@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="31">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="43">
  <properties>
-  <property name="player.x" type="float" value="2"/>
-  <property name="player.y" type="float" value="6"/>
+  <property name="player.x" type="float" value="0"/>
+  <property name="player.y" type="float" value="12"/>
  </properties>
  <objectgroup name="Ground">
   <object id="5" type="Ground" x="0" y="448" width="1920" height="64"/>
@@ -15,9 +15,15 @@
   <object id="16" type="Ground" x="3456" y="256" width="64" height="192"/>
   <object id="17" type="Ground" x="2048" y="448" width="448" height="64"/>
   <object id="18" type="Ground" x="3520" y="320" width="576" height="64"/>
+  <object id="41" type="Ground" x="576" y="224" width="192" height="32"/>
  </objectgroup>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="4736" y="64" width="64" height="64"/>
-  <object id="30" type="Spike" x="1152" y="384" width="64" height="32"/>
+  <object id="30" type="Spike" x="1152" y="416" width="64" height="32"/>
+  <object id="31" type="Spike" x="640" y="416" width="64" height="32"/>
+  <object id="32" type="Spike" x="1216" y="416" width="64" height="32"/>
+  <object id="35" type="Spike" x="1280" y="416" width="64" height="32"/>
+  <object id="37" type="Spike" x="1344" y="416" width="32" height="32"/>
+  <object id="40" type="Spike" x="576" y="256" width="192" height="32"/>
  </objectgroup>
 </map>

@@ -20,6 +20,7 @@ conf = {
   camOffsetX = 150, -- offset from the player
   -- Player (default 500)
   playerVelocity = 500,
+  playerImpulse = -1800, -- vertical impulse when jumping
   -- color
   hueOffset = 72,
   --
@@ -51,9 +52,10 @@ Parallax  = require 'modules.parallax'
 g = love.graphics
 
 -- Load LoveDebug module
--- if conf.build == 'debug' then
---   LoveDebug = require 'modules.lovedebug'
--- end
+if conf.build == 'debug' then
+  Debug = require 'modules.debug-output'
+  -- LoveDebug = require 'modules.lovedebug'
+end
 
 local c = HUE.new("#72f63f")
 -- local c = HUE.new("#e871a3")
@@ -111,6 +113,10 @@ function love.load()
 
   -- setBackgroundColor doesnt work with push
   -- love.graphics.setBackgroundColor(0,0,0)
+
+  if conf.build == 'debug' then
+    Debug.init()
+  end
 
   -- Gets the width and height of the window
   local w,h = love.graphics.getDimensions()

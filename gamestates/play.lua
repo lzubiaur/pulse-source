@@ -93,7 +93,7 @@ function Play:loadMap(world, filename)
     if o.type == 'Checkpoint' then
       Checkpoint:new(world,o.x,o.y)
     elseif o.type == 'Spike' then
-      Enemy:new(world,o.x,o.y)
+      Enemy:new(world,o.x,o.y,o.width,o.height)
     else
       Log.warn('Unknow type:',o.type)
     end
@@ -142,8 +142,8 @@ function Play:draw()
     table.sort(items,Entity.sortByZOrder)
     Lume.each(items,'draw')
   end)
-  g.print('FPS:'..tostring(love.timer.getFPS()),10,10)
   Push:finish()
+  Debug.draw()
 end
 
 function Play:onGameOver()
@@ -160,6 +160,8 @@ end
 function Play:update(dt)
 
   Timer.update(dt)
+
+  Debug.update('fps',love.timer.getFPS())
 
   local player = self.player
   -- TODO gameover

@@ -51,6 +51,10 @@ function GameplayOut:update(dt)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
 end
 
+function GameplayOut:onGameOver()
+  Log.info('Received gameover. Ignored.')
+end
+
 function GameplayOut:keypressed(key, scancode, isRepeat)
   -- disable touches
 end

@@ -4,8 +4,10 @@ local Entity = require 'entities.entity'
 
 local Enemy = Class('Enemy', Entity)
 
-function Enemy:initialize(world,x,y)
-  Entity.initialize(self,world,x,y, conf.cellSize, conf.cellSize)
+function Enemy:initialize(world,x,y,w,h)
+  w = w or conf.cellSize
+  h = h or conf.cellSize
+  Entity.initialize(self,world,x,y,w,h,{ zOrder = -1 })
 end
 
 function Enemy:draw()
