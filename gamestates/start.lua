@@ -7,9 +7,12 @@ local Start = Game:addState('Start')
 function Start:enteredState()
   Log.info('Entered the state "Start"')
 
+  g.setFont(self.font)
+
   self.progress = {
     alpha = 0,
     shift = 80,
+    pitch = 0.01, -- music pitch
     dir = 1, -- tween directions (1: forewards, 2:backwards)
     duration = 1,
   }
@@ -17,7 +20,7 @@ function Start:enteredState()
   self.progress.tween = Tween.new(
     self.progress.duration,
     self.progress,
-    { alpha = 1, shift = conf.shaderShift },
+    { alpha = 1, shift = conf.shaderShift, pitch = 1 },
     'inOutCubic')
 
   Timer.after(0.5,function() self.touchEnabled = true end)
@@ -44,7 +47,8 @@ end
 function Start:fadeout()
   self.progress.dir = -1
   self.timer = Timer.after(self.progress.duration,function()
-    self:gotoState('Play')
+    self.nextState = 'Play'
+    self:gotoState('Loading')
   end)
 end
 

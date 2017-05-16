@@ -15,9 +15,7 @@ function Play:enteredState()
   -- Must clear the timer on entering the scene or old timer will still running
   Timer.clear()
 
-  -- TODO crashes sometimes on android (file not found)
-  local music = love.audio.newSource('resources/music/keygen_9000.xm')
-  love.audio.play(music)
+  self.musicDuration = self.music:getDuration('seconds')
 
   self.isReleased = true -- touch flag to check touch is "repeat"
 

@@ -9,6 +9,10 @@ local GameplayIn = Game:addState('GameplayIn')
 function GameplayIn:enteredState()
   Log.info 'Enter state GameplayIn'
   self.progress.tween:reset()
+  local position = self.musicDuration*(self.player.x/self.worldWidth)
+  Log.info('Seek music to position ', position)
+  self.music:seek(position, 'seconds')
+  love.audio.play(self.music)
 end
 
 function GameplayIn:exitedState()
@@ -19,6 +23,7 @@ function GameplayIn:update(dt)
   if self.progress.tween:update(dt) then
     self:popState()
   end
+  self.music:setPitch(self.progress.pitch)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
   local x,y = self.camera:getPosition()
   local px, py = self.player:getCenter()
@@ -48,6 +53,7 @@ function GameplayOut:update(dt)
     self:popState()
     Beholder.trigger('ResetGame')
   end
+  self.music:setPitch(self.progress.pitch)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
 end
 

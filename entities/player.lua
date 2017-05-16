@@ -111,6 +111,7 @@ function Player:checkCollisions(dt,len, cols)
       end
     elseif col.other.class.name == 'Checkpoint' then
       self.cpx,self.cpy = col.other.x, col.other.y
+      col.other:destroy()
     elseif col.other.class.name == 'Laser' then
       Beholder.trigger('Gameover')
     end

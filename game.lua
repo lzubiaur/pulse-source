@@ -27,6 +27,7 @@ function Game:initialize()
 
   i18n.loadFile('resources/i18n.lua')
 
+  self.nextState = 'Start'
   self:gotoState('Loading')
 end
 
