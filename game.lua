@@ -7,6 +7,7 @@ local shader1 = nil
 -- local shader2 = nil
 
 function Game:initialize()
+  Log.info('Create game instance.')
   shader1 = love.graphics.newShader("resources/shaders/separate_chroma.glsl")
   -- shader2 = love.graphics.newShader("resources/shaders/scanlines.glsl")
   -- Uncomment below to use two post-process effects
@@ -20,9 +21,9 @@ function Game:initialize()
   Push:setShader(shader1)
 
   -- default graphics params
-  love.graphics.setLineWidth(8)
+  love.graphics.setLineWidth(conf.lineWidth)
   love.graphics.setLineJoin('bevel')
-  love.graphics.setPointSize(5)
+  love.graphics.setPointSize(conf.pointSize)
 
   i18n.loadFile('resources/i18n.lua')
 

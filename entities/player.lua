@@ -68,7 +68,7 @@ function Player:filter(other)
     return 'slide'
   elseif other.class.name == 'Checkpoint' then
     return 'cross'
-  elseif other.class.name == 'Enemy' then
+  elseif other.class.name == 'Laser' then
     return 'cross'
   end
   return nil
@@ -111,7 +111,7 @@ function Player:checkCollisions(dt,len, cols)
       end
     elseif col.other.class.name == 'Checkpoint' then
       self.cpx,self.cpy = col.other.x, col.other.y
-    elseif col.other.class.name == 'Enemy' then
+    elseif col.other.class.name == 'Laser' then
       Beholder.trigger('Gameover')
     end
   end

@@ -5,7 +5,7 @@ local Ground = require 'entities.ground'
 local Player = require 'entities.player'
 local Entity = require 'entities.entity'
 local Checkpoint = require 'entities.checkpoint'
-local Enemy = require 'entities.enemy'
+local Laser = require 'entities.laser'
 
 local Play = Game:addState('Play')
 
@@ -25,7 +25,7 @@ function Play:enteredState()
   self.world = Bump.newWorld(conf.cellSize)
 
   -- Load the game map
-  local map = self:loadMap(self.world, 'resources/maps/map02.lua')
+  local map = self:loadMap(self.world, 'resources/maps/map01.lua')
 
   -- Load player position from map
   local x,y = map.properties['player.x'] * map.tilewidth,
@@ -93,7 +93,7 @@ function Play:loadMap(world, filename)
     if o.type == 'Checkpoint' then
       Checkpoint:new(world,o.x,o.y)
     elseif o.type == 'Spike' then
-      Enemy:new(world,o.x,o.y,o.width,o.height)
+      Laser:new(world,o.x,o.y,o.width,o.height)
     else
       Log.warn('Unknow type:',o.type)
     end
@@ -160,6 +160,7 @@ end
 function Play:update(dt)
 
   Timer.update(dt)
+  Laser.updateEffect(dt)
 
   Debug.update('fps',love.timer.getFPS())
 

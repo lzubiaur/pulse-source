@@ -10,11 +10,4 @@ function Enemy:initialize(world,x,y,w,h)
   Entity.initialize(self,world,x,y,w,h,{ zOrder = -1 })
 end
 
-function Enemy:draw()
-  local r,g,b,a = love.graphics.getColor()
-  love.graphics.setColor(255,0,0,255)
-  Entity.draw(self)
-  love.graphics.setColor(r,g,b,a)
-end
-
 return Enemy

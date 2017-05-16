@@ -1,3 +1,3 @@
 scanlines.glsl - https://github.com/tanema/light_world.lua/ see modules/licenses/LICENSE_shine.txt
-kaleidoscope.glsl - form "share a shader" post on love2d forum (https://love2d.org/forums/viewtopic.php?f=4&t=3733)
-
+separate_chroma.glsl - form "share a shader" post on love2d forum (https://love2d.org/forums/viewtopic.php?f=4&t=3733)
+glow.glsl - https://gist.github.com/BlackBulletIV/4218802

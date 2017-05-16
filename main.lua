@@ -25,6 +25,9 @@ conf = {
   hueOffset = 72,
   --
   shaderShift = 3,
+  -- grafics
+  lineWidth = 8,
+  pointSize = 5,
 }
 
 -- Load 3rd party libraries/modules globally.
@@ -83,6 +86,12 @@ palette = createPalette(c)
 function to_rgb(color)
   return Lume.color(color:to_rgb(),256)
 end
+
+-- TODO run stress testing on both to_rgb functions
+-- function to_rgb(color)
+--   local r,g,b = HUE.hsl_to_rgb(color.H,color.S,color.L)
+--   return r*256,g*256,b*256
+-- end
 
 -- Log level
 Log.level = conf.build == 'debug' and 'debug' or 'warn'

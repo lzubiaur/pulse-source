@@ -76,7 +76,7 @@ end
 
 -- debug draw
 function Entity:draw()
-  love.graphics.rectangle('line',self.x,self.y,self.w,self.h)
+  g.rectangle('line',self.x,self.y,self.w,self.h)
 end
 
 return Entity
