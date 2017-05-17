@@ -6,7 +6,7 @@ local Checkpoint = Class('Checkpoint', Entity)
 
 function Checkpoint:initialize(world,x,y)
   Entity.initialize(self,world,x,y, conf.cellSize, conf.cellSize, { zOrder = -1 })
-  self.alpha = 100
+  self.alpha = 180
   self.scale = 1
   self.tween = Tween.new(0.3,self,{alpha = 0,scale=2})
 end

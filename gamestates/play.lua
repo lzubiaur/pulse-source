@@ -41,12 +41,10 @@ function Play:enteredState()
   self.worldHeight = map.tileheight * map.height
   Log.debug('Map size in px:',self.worldWidth, self.worldHeight)
 
-  -- Create the follow camera. Size of the camera is the size of the map
-  -- Add an offset to the left to avoid a jump in the camera when starting
-  -- if the player is at the very left
-  self.camera = Gamera.new(-100,0, self.worldWidth, self.worldHeight)
-  -- local x,y = self.player:getCenter()
-  -- self.camera:setPosition(x + 250,y)
+  -- Create the follow camera. Size of the camera is the size of the map + offset.
+  self.camera = Gamera.new(
+    -conf.camMarginX, -conf.camMarginY,
+    self.worldWidth + conf.camMarginX, self.worldHeight + conf.camMarginY)
   -- Camera window must be set to the game resolution and not the
   -- the actual screen resolution
   self.camera:setWindow(0,0,conf.width,conf.height)
@@ -166,6 +164,7 @@ function Play:update(dt)
   Timer.update(dt)
   Laser.updateEffect(dt)
 
+  -- TODO remove if not in debug mode
   Debug.update('fps',love.timer.getFPS())
 
   local player = self.player

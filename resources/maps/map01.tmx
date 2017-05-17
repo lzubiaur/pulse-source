@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="92">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="140">
  <properties>
   <property name="player.x" type="float" value="0"/>
   <property name="player.y" type="float" value="12"/>
@@ -25,9 +25,19 @@
   <object id="85" type="Ground" x="8416" y="448" width="64" height="64"/>
   <object id="86" type="Ground" x="8608" y="384" width="64" height="128"/>
   <object id="87" type="Ground" x="8800" y="288" width="64" height="224"/>
-  <object id="88" type="Ground" x="8960" y="224" width="64" height="96"/>
-  <object id="90" type="Ground" x="9120" y="160" width="64" height="96"/>
-  <object id="91" type="Ground" x="9376" y="448" width="448" height="64"/>
+  <object id="88" type="Ground" x="8992" y="224" width="64" height="96"/>
+  <object id="90" type="Ground" x="9184" y="128" width="64" height="96"/>
+  <object id="91" type="Ground" x="9376" y="448" width="736" height="64"/>
+  <object id="102" type="Ground" x="10272" y="352" width="128" height="160"/>
+  <object id="103" type="Ground" x="10496" y="352" width="128" height="160"/>
+  <object id="120" type="Ground" x="11392" y="128" width="64" height="384"/>
+  <object id="121" type="Ground" x="10784" y="288" width="32" height="32"/>
+  <object id="123" type="Ground" x="11232" y="288" width="32" height="32"/>
+  <object id="124" type="Ground" x="11648" y="256" width="64" height="256"/>
+  <object id="125" type="Ground" x="11776" y="352" width="64" height="160"/>
+  <object id="126" type="Ground" x="11008" y="288" width="32" height="32"/>
+  <object id="128" type="Ground" x="11520" y="192" width="64" height="320"/>
+  <object id="130" type="Ground" x="12096" y="384" width="288" height="64"/>
  </objectgroup>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="6688" y="384" width="64" height="64"/>
@@ -47,5 +57,15 @@
   <object id="77" type="Spike" x="7776" y="320" width="32" height="32"/>
   <object id="82" type="Spike" x="8096" y="288" width="32" height="96"/>
   <object id="83" type="Spike" x="8096" y="64" width="32" height="96"/>
+  <object id="95" type="Spike" x="8896" y="320" width="64" height="32"/>
+  <object id="97" type="Spike" x="9504" y="352" width="480" height="32"/>
+  <object id="98" type="Spike" x="10144" y="448" width="128" height="32"/>
+  <object id="101" type="Spike" x="10400" y="0" width="32" height="288"/>
+  <object id="131" type="Spike" x="11904" y="384" width="128" height="64"/>
+  <object id="132" type="Checkpoint" x="9376" y="384" width="64" height="64"/>
+  <object id="136" type="Spike" x="11552" y="0" width="64" height="96"/>
+  <object id="137" type="Spike" x="11680" y="0" width="64" height="160"/>
+  <object id="138" type="Spike" x="11808" y="0" width="64" height="224"/>
+  <object id="139" type="Debug.Player" x="9184" y="64" width="64" height="64"/>
  </objectgroup>
 </map>
