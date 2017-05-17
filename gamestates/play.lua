@@ -94,6 +94,10 @@ function Play:loadMap(world, filename)
       Checkpoint:new(world,o.x,o.y)
     elseif o.type == 'Spike' then
       Laser:new(world,o.x,o.y,o.width,o.height)
+    elseif conf.build == 'debug' and o.type == 'Debug.Player' then
+      Log.debug('Debug player position',o.x,o.y)
+      map.properties['player.x'] = o.x / map.tilewidth
+      map.properties['player.y'] = o.y / map.tileheight
     else
       Log.warn('Unknow type:',o.type)
     end

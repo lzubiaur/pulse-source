@@ -95,7 +95,7 @@ end
 
 -- Log level
 Log.level = conf.build == 'debug' and 'debug' or 'warn'
-Log.usecolor = false
+Log.usecolor = true
 
 -- Note on loading package:
 -- On some platforms like mac osx, the file system is by default not case sensitive
