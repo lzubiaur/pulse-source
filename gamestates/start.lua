@@ -12,7 +12,8 @@ function Start:enteredState()
   self.progress = {
     alpha = 0,
     shift = 80,
-    pitch = 0.01, -- music pitch
+    pitch = 0.1, -- music pitch
+    volume = 0,
     dir = 1, -- tween directions (1: forewards, 2:backwards)
     duration = 1,
   }
@@ -20,7 +21,7 @@ function Start:enteredState()
   self.progress.tween = Tween.new(
     self.progress.duration,
     self.progress,
-    { alpha = 1, shift = conf.shaderShift, pitch = 1 },
+    { alpha = 1, shift = conf.shaderShift, pitch = 1, volume = 1 },
     'inOutCubic')
 
   Timer.after(0.5,function() self.touchEnabled = true end)

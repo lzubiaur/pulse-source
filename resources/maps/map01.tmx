@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="140">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="155">
  <properties>
   <property name="player.x" type="float" value="0"/>
   <property name="player.y" type="float" value="12"/>
@@ -10,7 +10,7 @@
   <object id="12" type="Ground" x="4576" y="384" width="320" height="64"/>
   <object id="17" type="Ground" x="4192" y="448" width="448" height="64"/>
   <object id="18" type="Ground" x="5920" y="320" width="576" height="64"/>
-  <object id="41" type="Ground" x="2720" y="224" width="192" height="32"/>
+  <object id="41" type="Ground" x="2688" y="224" width="224" height="32"/>
   <object id="48" type="Ground" x="0" y="448" width="960" height="64"/>
   <object id="49" type="Ground" x="1088" y="448" width="736" height="64"/>
   <object id="50" type="Ground" x="4832" y="320" width="320" height="64"/>
@@ -24,9 +24,9 @@
   <object id="84" type="Ground" x="8224" y="448" width="64" height="64"/>
   <object id="85" type="Ground" x="8416" y="448" width="64" height="64"/>
   <object id="86" type="Ground" x="8608" y="384" width="64" height="128"/>
-  <object id="87" type="Ground" x="8800" y="288" width="64" height="224"/>
+  <object id="87" type="Ground" x="8800" y="224" width="64" height="288"/>
   <object id="88" type="Ground" x="8992" y="224" width="64" height="96"/>
-  <object id="90" type="Ground" x="9184" y="128" width="64" height="96"/>
+  <object id="90" type="Ground" x="9184" y="0" width="64" height="224"/>
   <object id="91" type="Ground" x="9376" y="448" width="736" height="64"/>
   <object id="102" type="Ground" x="10272" y="352" width="128" height="160"/>
   <object id="103" type="Ground" x="10496" y="352" width="128" height="160"/>
@@ -38,18 +38,22 @@
   <object id="126" type="Ground" x="11008" y="288" width="32" height="32"/>
   <object id="128" type="Ground" x="11520" y="192" width="64" height="320"/>
   <object id="130" type="Ground" x="12096" y="384" width="288" height="64"/>
+  <object id="142" type="Ground" x="12544" y="384" width="128" height="32"/>
+  <object id="143" type="Ground" x="12736" y="256" width="608" height="32"/>
+  <object id="144" type="Ground" x="12736" y="480" width="32" height="32"/>
+  <object id="146" type="Ground" x="12928" y="480" width="32" height="32"/>
+  <object id="147" type="Ground" x="13280" y="480" width="512" height="32"/>
  </objectgroup>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="6688" y="384" width="64" height="64"/>
-  <object id="31" type="Spike" x="2784" y="416" width="64" height="32"/>
-  <object id="40" type="Spike" x="2720" y="256" width="192" height="32"/>
-  <object id="47" type="Spike" x="3296" y="416" width="224" height="32"/>
+  <object id="31" type="Spike" x="2784" y="416" width="32" height="32"/>
+  <object id="40" type="Spike" x="2720" y="256" width="160" height="32"/>
+  <object id="47" type="Spike" x="3296" y="416" width="192" height="32"/>
   <object id="53" type="Spike" x="4512" y="416" width="64" height="32"/>
   <object id="54" type="Spike" x="4768" y="352" width="64" height="32"/>
   <object id="55" type="Spike" x="5024" y="288" width="64" height="32"/>
   <object id="56" type="Spike" x="5312" y="192" width="32" height="64"/>
   <object id="57" type="Spike" x="5792" y="128" width="576" height="32"/>
-  <object id="58" type="Checkpoint" x="3712" y="384" width="64" height="64"/>
   <object id="60" type="Spike" x="4512" y="256" width="64" height="32"/>
   <object id="61" type="Spike" x="4768" y="192" width="64" height="32"/>
   <object id="62" type="Spike" x="5024" y="128" width="64" height="32"/>
@@ -62,10 +66,11 @@
   <object id="98" type="Spike" x="10144" y="448" width="128" height="32"/>
   <object id="101" type="Spike" x="10400" y="0" width="32" height="288"/>
   <object id="131" type="Spike" x="11904" y="384" width="128" height="64"/>
-  <object id="132" type="Checkpoint" x="9376" y="384" width="64" height="64"/>
+  <object id="132" type="Checkpoint" x="9600" y="384" width="64" height="64"/>
   <object id="136" type="Spike" x="11552" y="0" width="64" height="96"/>
   <object id="137" type="Spike" x="11680" y="0" width="64" height="160"/>
   <object id="138" type="Spike" x="11808" y="0" width="64" height="224"/>
-  <object id="139" type="Debug.Player" x="9184" y="64" width="64" height="64"/>
+  <object id="148" type="Spike" x="13344" y="256" width="384" height="32"/>
+  <object id="149" type="Spike" x="12768" y="288" width="160" height="32"/>
  </objectgroup>
 </map>

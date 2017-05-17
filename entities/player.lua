@@ -92,7 +92,7 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
-  Debug.update('Player',Lume.format('Velocity: {vx}/{vy}',self))
+  Debug.update('Player',Lume.format('Position: {x}/{y} Velocity: {vx}/{vy}',self))
 end
 
 function Player:checkCollisions(dt,len, cols)

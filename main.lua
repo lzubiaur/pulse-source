@@ -19,14 +19,14 @@ conf = {
   -- TODO add camera parameters (camera borders, smooth/lerp)
   camOffsetX = 150, -- offset from the player
   camMarginX = 150, -- horizontal outer space allowed to the camera to move outside the map/world
-  camMarginY = 150, -- veritcal margin must 
+  camMarginY = 150, -- veritcal margin must be big enough so the player is still updated when outside the map.
   -- Player (default 500)
-  playerVelocity = 500,
+  playerVelocity = 500, -- Player horizontal velocity in pixel/second
   playerImpulse = -1800, -- vertical impulse when jumping
   -- color
   hueOffset = 72,
   --
-  shaderShift = 3,
+  shaderShift = 4,
   -- grafics
   lineWidth = 8,
   pointSize = 5,

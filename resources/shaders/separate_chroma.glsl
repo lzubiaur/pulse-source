@@ -4,9 +4,10 @@
 extern number shift;
 extern number alpha;
 
-// TODO pass actual window size?
 // vec2 scale = vec2(1.0/800.0, 1.0/600.0);
-vec2 scale = vec2(0.00125, 0.0016);
+// vec2 scale = vec2(0.00125, 0.0016);
+// amplitude/direction
+vec2 scale = vec2(0.002,-0.002);
 
 vec4 effect(vec4 color, Image texture, vec2 tc, vec2 pixel_coords)
   {

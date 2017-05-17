@@ -166,6 +166,7 @@ function Play:update(dt)
 
   -- TODO remove if not in debug mode
   Debug.update('fps',love.timer.getFPS())
+  Debug.update('Music',self.music:tell())
 
   local player = self.player
   -- TODO gameover
