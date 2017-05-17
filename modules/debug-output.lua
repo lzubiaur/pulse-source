@@ -5,6 +5,7 @@ local module = {}
 local t = {}
 local font = nil
 local fontHeight = 0
+local enabled = false
 
 function module.init()
   font = g.newFont('resources/fonts/roboto-condensed.fnt','resources/fonts/roboto-condensed.png')
@@ -12,6 +13,8 @@ function module.init()
 end
 
 function module.draw()
+  if not enabled then return end
+
   local oldFont = g.getFont()
   local i = 0
   g.setFont(font)
@@ -28,6 +31,14 @@ end
 
 function module.update(k,v)
   t[k] = v
+end
+
+function module.setEnabled(status)
+  enabled = status
+end
+
+function module.toogle()
+  enabled = not enabled
 end
 
 return module

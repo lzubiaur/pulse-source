@@ -12,6 +12,8 @@ local Play = Game:addState('Play')
 function Play:enteredState()
   Log.info 'Entered state "Play"'
 
+  Debug.setEnabled(true)
+
   -- Must clear the timer on entering the scene or old timer will still running
   Timer.clear()
 
@@ -205,6 +207,8 @@ function Play:keypressed(key, scancode, isrepeat)
     self:pushState('Paused')
   elseif key == 'c' then
     offsetHuePalette(conf.hueOffset)
+  elseif key == 'd' then
+    Debug.toogle()
   end
 end
 

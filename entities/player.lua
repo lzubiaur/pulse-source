@@ -28,6 +28,7 @@ function Player:onResetGame()
   self.longRotTween:reset()
   self.jumps,self.angle = 0,0
   self.impulse = conf.playerImpulse
+  self.vx,self.vy = conf.playerVelocity, 0
 end
 
 function Player:jump()
@@ -91,7 +92,7 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
-  Debug.update('vy',self.vy)
+  Debug.update('Player',Lume.format('Velocity: {vx}/{vy}',self))
 end
 
 function Player:checkCollisions(dt,len, cols)

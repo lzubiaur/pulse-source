@@ -42,8 +42,10 @@ function Entity:applyVelocity(dt)
 end
 
 function Entity:clampVelocity()
-  self.vx = Lume.sign(self.vx) * Lume.clamp(math.abs(self.vx), 0, self.mx)
-  self.vy = Lume.sign(self.vy) * Lume.clamp(math.abs(self.vy), 0, self.my)
+  -- self.vx = Lume.sign(self.vx) * Lume.clamp(math.abs(self.vx), 0, self.mx)
+  -- self.vy = Lume.sign(self.vy) * Lume.clamp(math.abs(self.vy), 0, self.my)
+  self.vx = Lume.clamp(self.vx, -self.mx, self.mx)
+  self.vy = Lume.clamp(self.vy, -self.my, self.my)
 end
 
 function Entity:destroy()
