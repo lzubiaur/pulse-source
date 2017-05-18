@@ -31,6 +31,7 @@ function GameplayIn:update(dt)
   local x,y = self.camera:getPosition()
   local px, py = self.player:getCenter()
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
+  self.parallax:setTranslation(px,py)
 end
 
 function GameplayIn:keypressed(key, scancode, isRepeat)
@@ -57,7 +58,7 @@ function GameplayOut:update(dt)
     Beholder.trigger('ResetGame')
   end
   self.music:setPitch(self.progress.pitch)
-  self.music:setVolume(self.progress.volume)
+  -- self.music:setVolume(self.progress.volume)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
 end
 

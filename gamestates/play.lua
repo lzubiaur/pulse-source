@@ -57,6 +57,7 @@ function Play:enteredState()
   self.parallax:addLayer('layer0',1,{relativeScale=0.2})
   self.parallax:addLayer('layer1',1,{relativeScale=0.4})
   self.parallax:addLayer('layer2',1,{relativeScale=0.8})
+  self.parallax:setTranslation(px,py)
 
   self.vertices = {}
   for i=1,3 do
@@ -120,8 +121,10 @@ function Play:generateBackground()
 end
 
 function Play:drawParallax()
-  g.setColor(255,255,255,32)
   self.parallax:push('layer0')
+  g.setColor(255,255,255,32)
+    g.circle('fill',600,200,150)
+  g.setColor(255,255,255,32)
     g.line(self.vertices[1])
   self.parallax:pop()
   self.parallax:push('layer1')
@@ -166,6 +169,7 @@ function Play:update(dt)
 
   -- TODO remove if not in debug mode
   Debug.update('fps',love.timer.getFPS())
+  Debug.update('Frame',string.format("Average frame time: %.3f ms", 1000 * love.timer.getAverageDelta()))
   Debug.update('Music',self.music:tell())
 
   local player = self.player
@@ -183,11 +187,16 @@ function Play:update(dt)
   Lume.each(items,'update',dt)
 
   -- TODO smooth the camera. X doesnt work smoothly
+  -- TODO Check Lume.smooth instead of lerp for X (and y?)
   local x,y = self.camera:getPosition()
   local px, py = player:getCenter()
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
   self.parallax:setTranslation(px,py)
-  -- self.parallax:update(dt)
+  -- self.parallax:update(dt) -- not required
+
+  if self.nextStep then
+    self:pushState('Paused')
+  end
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)

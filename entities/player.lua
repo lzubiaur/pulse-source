@@ -15,7 +15,12 @@ function Player:initialize(world, x,y)
       angle = 0,                    -- Current angle in degree
   })
   -- TODO set player size from actual map cell size
-  Entity.initialize(self,world,x,y,conf.cellSize,conf.cellSize,{vx = conf.playerVelocity, mass = 5, zOrder = 1})
+  Entity.initialize(self, world, x,y, conf.cellSize,conf.cellSize, {
+    vx = conf.playerVelocity,
+    mx = conf.playerMaxVelocity.x,
+    my = conf.playerMaxVelocity.y,
+    mass = 5, zOrder = 1
+  })
   self.rotTween = Tween.new(0.3,self,{angle = 90})
   self.longRotTween = Tween.new(0.3,self,{angle = 180})
 
@@ -27,15 +32,16 @@ function Player:onResetGame()
   self.rotTween:reset()
   self.longRotTween:reset()
   self.jumps,self.angle = 0,0
-  self.impulse = conf.playerImpulse
+  -- self.impulse = conf.playerImpulse
   self.vx,self.vy = conf.playerVelocity, 0
 end
 
 function Player:jump()
   if self.jumps < 2 then
-    self.vy = self.impulse
+    self.vy = conf.playerImpulse
     self.jumps = self.jumps + 1
     if self.jumps == 2 then
+      self.vy = conf.playerImpulse2
       self.longRotTween = nil
       self.longRotTween = Tween.new(0.3,self,{angle = 180})
     end
@@ -86,13 +92,14 @@ end
 function Player:update(dt)
   -- TODO Fix maximum jump height?
   self:applyGravity(dt)
-  self:applyVelocity(dt)
   self:clampVelocity()
+  self:applyVelocity(dt)
   self:rotate(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
-  Debug.update('Player',Lume.format('Position: {x}/{y} Velocity: {vx}/{vy}',self))
+  -- Debug.update('Player',Lume.format('Position: {x}/{y} Velocity: {vx}/{vy}',self))
+  Debug.update('Player',string.format('velocity: %.3f/%.3f',self.vx,self.vy))
 end
 
 function Player:checkCollisions(dt,len, cols)

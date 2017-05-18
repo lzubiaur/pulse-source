@@ -22,7 +22,9 @@ conf = {
   camMarginY = 150, -- veritcal margin must be big enough so the player is still updated when outside the map.
   -- Player (default 500)
   playerVelocity = 500, -- Player horizontal velocity in pixel/second
-  playerImpulse = -1800, -- vertical impulse when jumping
+  playerImpulse = -1000, -- vertical impulse when jumping
+  playerImpulse2 = -1000, -- jump 2 impulse
+  playerMaxVelocity = { x=1000,y=1000 },
   -- color
   hueOffset = 72,
   --
@@ -149,6 +151,7 @@ function love.draw()
 end
 
 function love.update(dt)
+  --  if dt > .02 then dt = .02 end
   game:update(dt)
 end
 

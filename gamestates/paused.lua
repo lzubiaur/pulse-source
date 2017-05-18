@@ -15,8 +15,12 @@ end
 
 function Paused:keypressed(key, scancode, isrepeat)
   if key == 'p' then
+    self.nextStep = false
     self.music:resume()
     -- TODO state name ('Paused') or nil? both work
+    self:popState(nil)
+  elseif key == 'n' then
+    self.nextStep = true
     self:popState(nil)
   end
 end
