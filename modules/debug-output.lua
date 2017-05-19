@@ -6,6 +6,8 @@ local t = {}
 local font = nil
 local fontHeight = 0
 local enabled = false
+local oldFont = nil
+local oldColor = {}
 
 function module.init()
   font = g.newFont('resources/fonts/roboto-condensed.fnt','resources/fonts/roboto-condensed.png')
@@ -15,14 +17,11 @@ end
 function module.draw()
   if not enabled then return end
 
-  local oldFont = g.getFont()
   local i = 0
-  g.setFont(font)
   for k,v in pairs(t) do
-    g.print(k..':'..v,10,i * fontHeight)
+    g.print(k..':'..v,0,i * fontHeight)
     i = i + 1
   end
-  g.setFont(oldFont)
 end
 
 function module.add(k,v)
@@ -39,6 +38,18 @@ end
 
 function module.toogle()
   enabled = not enabled
+end
+
+function module.push()
+  oldFont = g.getFont()
+  oldColor = {g.getColor()}
+  g.setColor(0,255,0,255)
+  g.setFont(font)
+end
+
+function module.pop()
+  g.setFont(oldFont)
+  g.setColor(unpack(oldColor))
 end
 
 return module
