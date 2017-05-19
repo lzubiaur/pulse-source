@@ -42,11 +42,11 @@ function Game:updateShaders(dt,shift,alpha)
 end
 
 function Game:update(dt)
-  error('Game:update is not implemented')
+  error('Game:update() is not implemented')
 end
 
 function Game:draw()
-  error('Game:draw is not implemented')
+  error('Game:draw() is not implemented')
 end
 
 function Game:keypressed(key, scancode, isRepeat)
