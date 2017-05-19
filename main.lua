@@ -20,8 +20,7 @@ conf = {
   camOffsetX = 150, -- offset from the player
   camMarginX = 150, -- horizontal outer space allowed to the camera to move outside the map/world
   camMarginY = 150, -- veritcal margin must be big enough so the player is still updated when outside the map.
-  -- Player (default 500)
-  playerVelocity = 500, -- Player horizontal velocity in pixel/second
+  playerVelocity = 500, -- Player horizontal velocity in pixel/second. Default 500.
   playerImpulse = -1000, -- vertical impulse when jumping
   playerImpulse2 = -1000, -- jump 2 impulse
   playerMaxVelocity = { x=1000,y=1000 },
@@ -116,6 +115,8 @@ require 'gamestates.start'
 require 'gamestates.play'
 require 'gamestates.paused'
 require 'gamestates.transitions'
+-- TODO include only in debug mode build
+require 'gamestates.debug.play_debug'
 
 -- The global game instance
 game = nil
