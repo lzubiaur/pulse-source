@@ -6,6 +6,7 @@ local Game = require 'game'
 local Paused = Game:addState('Paused')
 
 function Paused:enteredState()
+  Log.info('Entered state Paused')
   self.music:pause()
 end
 
@@ -15,12 +16,8 @@ end
 
 function Paused:keypressed(key, scancode, isrepeat)
   if key == 'p' then
-    self.nextStep = false
     self.music:resume()
     -- TODO state name ('Paused') or nil? both work
-    self:popState(nil)
-  elseif key == 'n' then
-    self.nextStep = true
     self:popState(nil)
   end
 end

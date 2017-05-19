@@ -12,8 +12,6 @@ local Play = Game:addState('Play')
 function Play:enteredState()
   Log.info 'Entered state "Play"'
 
-  Debug.setEnabled(true)
-
   -- Must clear the timer on entering the scene or old timer will still running
   Timer.clear()
 
@@ -148,7 +146,6 @@ function Play:draw()
     Lume.each(items,'draw')
   end)
   Push:finish()
-  Debug.draw()
 end
 
 function Play:onGameOver()
@@ -166,11 +163,6 @@ function Play:update(dt)
 
   Timer.update(dt)
   Laser.updateEffect(dt)
-
-  -- TODO remove if not in debug mode
-  Debug.update('fps',love.timer.getFPS())
-  Debug.update('Frame',string.format("Average frame time: %.3f ms", 1000 * love.timer.getAverageDelta()))
-  Debug.update('Music',self.music:tell())
 
   local player = self.player
   -- TODO gameover
@@ -194,9 +186,6 @@ function Play:update(dt)
   self.parallax:setTranslation(px,py)
   -- self.parallax:update(dt) -- not required
 
-  if self.nextStep then
-    self:pushState('Paused')
-  end
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
@@ -218,10 +207,10 @@ function Play:keypressed(key, scancode, isrepeat)
     self.player:jump()
   elseif key == 'p' then
     self:pushState('Paused')
-  elseif key == 'c' then
-    offsetHuePalette(conf.hueOffset)
   elseif key == 'd' then
-    Debug.toogle()
+    self:pushState('PlayDebug')
+  elseif key == 's' then
+    -- TODO enable/disable volume
   end
 end
 

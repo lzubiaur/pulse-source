@@ -58,7 +58,7 @@ function GameplayOut:update(dt)
     Beholder.trigger('ResetGame')
   end
   self.music:setPitch(self.progress.pitch)
-  -- self.music:setVolume(self.progress.volume)
+  self.music:setVolume(self.progress.volume)
   self:updateShaders(dt, self.progress.shift, self.progress.alpha)
 end
 
