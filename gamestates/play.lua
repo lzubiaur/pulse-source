@@ -6,6 +6,7 @@ local Player = require 'entities.player'
 local Entity = require 'entities.entity'
 local Checkpoint = require 'entities.checkpoint'
 local Laser = require 'entities.laser'
+local Coin = require 'entities.coin'
 
 local Play = Game:addState('Play')
 
@@ -26,12 +27,10 @@ function Play:enteredState()
   local map = self:loadMap(self.world, 'resources/maps/map01.lua')
 
   -- Load player position from map
-  local x,y = map.properties['player.x'] * map.tilewidth,
-              map.properties['player.y'] * map.tileheight
+  local x,y = map:convertTileToPixel(map.properties.px,map.properties.py)
 
   -- Create the player entity
   self.player = Player:new(self.world, x,y)
-  -- self.world:update(self.player, x,y)
   Log.debug('Player position:',self.player.x, self.player.y)
 
   -- Get world map size
@@ -70,7 +69,7 @@ end
 
 function Play:exitedState()
   Log.info 'Exited state Play'
-  -- TODO clean up?
+  -- TODO clean beholder observers?
   Timer.clear()
 end
 
@@ -91,10 +90,10 @@ function Play:loadMap(world, filename)
       Checkpoint:new(world,o.x,o.y)
     elseif o.type == 'Spike' then
       Laser:new(world,o.x,o.y,o.width,o.height)
+    elseif o.type == 'Coin' then
+      Coin:new(world,o.x,o.y,o.width,o.height, { id=o.id } )
     elseif conf.build == 'debug' and o.type == 'Debug.Player' then
-      Log.debug('Debug player position',o.x,o.y)
-      map.properties['player.x'] = o.x / map.tilewidth
-      map.properties['player.y'] = o.y / map.tileheight
+      map.properties.px, map.properties.py = map:convertPixelToTile(o.x,o.y)
     else
       Log.warn('Unknow type:',o.type)
     end

@@ -3,6 +3,7 @@
 
 
 ## TODO
+* add effect to coin (see trail.lua)
 * GUI (pause,quit...)
 * disable/enable volume
 * Fade color while the player progress in the level

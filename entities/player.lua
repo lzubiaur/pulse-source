@@ -81,9 +81,9 @@ end
 function Player:filter(other)
   if other:isInstanceOf(Ground) then
     return 'slide'
-  elseif other.class.name == 'Checkpoint' then
-    return 'cross'
-  elseif other.class.name == 'Laser' then
+  elseif other.class.name == 'Checkpoint' or
+         other.class.name == 'Coin' or
+         other.class.name == 'Laser' then
     return 'cross'
   end
   return nil
@@ -129,7 +129,10 @@ function Player:checkCollisions(dt,len, cols)
       end
     elseif col.other.class.name == 'Checkpoint' then
       self.cpx,self.cpy = col.other.x, col.other.y
+      Beholder.trigger('Checkpoint')
       col.other:destroy()
+    elseif col.other.class.name == 'Coin' then
+      col.other:gotoState('Checked')
     elseif col.other.class.name == 'Laser' then
       Beholder.trigger('Gameover')
     end

@@ -14,6 +14,7 @@ function Entity:initialize(world, x,y, w,h, opt)
     mx = opt.mx or 800, my = opt.my or 800, -- maximum velocity
     vx = opt.vx or 0, vy = opt.vy or 0, -- current velocity
     mass = opt.mass or 1,
+    id = opt.id
   })
   -- Log.debug('create entity ',self,x,y,self.mx,self.my,self.zOrder)
   -- add this instance to the physics world
@@ -80,6 +81,29 @@ end
 -- debug draw
 function Entity:draw()
   g.rectangle('line',self.x,self.y,self.w,self.h)
+end
+
+function Entity:loadState()
+  if not self.id then
+    error('No ID for entity',self.class.name)
+  end
+  if GameState.levels[1] == nil then return nil end
+  return GameState.levels[1][self.id]
+end
+
+function Entity:saveState(state)
+  if not self.id then
+    error('No ID for entity', self.class.name)
+  end
+  GameState.levels[1] = GameState[1] or {}
+  GameState.levels[1][self.id] = state
+end
+
+function Entity:restoreState()
+  local state = self:loadState()
+  if state then
+    self:gotoState(state.state)
+  end
 end
 
 return Entity

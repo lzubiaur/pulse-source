@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="229">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="237">
  <properties>
-  <property name="player.x" type="float" value="0"/>
-  <property name="player.y" type="float" value="12"/>
+  <property name="px" type="int" value="0"/>
+  <property name="py" type="int" value="12"/>
  </properties>
  <objectgroup name="Ground">
   <object id="5" type="Ground" x="2144" y="448" width="1920" height="64"/>
@@ -45,6 +45,7 @@
   <object id="222" type="Ground" x="16768" y="480" width="2976" height="32"/>
   <object id="223" type="Ground" x="19872" y="480" width="3296" height="32"/>
  </objectgroup>
+ <objectgroup name="Object Layer 3"/>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="6688" y="384" width="64" height="64"/>
   <object id="31" type="Spike" x="2784" y="416" width="32" height="32"/>
@@ -115,6 +116,8 @@
   <object id="219" type="Spike" x="19296" y="448" width="64" height="32"/>
   <object id="220" type="Checkpoint" x="19456" y="320" width="64" height="64"/>
   <object id="224" type="Checkpoint" x="13376" y="416" width="64" height="64"/>
-  <object id="228" type="Debug.Player" x="13280" y="416" width="64" height="64"/>
+  <object id="232" type="Coin" x="10432" y="480" width="32" height="32"/>
+  <object id="233" type="Debug.Player" x="9856" y="384" width="64" height="64"/>
+  <object id="235" type="Coin" x="10912" y="352" width="32" height="32"/>
  </objectgroup>
 </map>

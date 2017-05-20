@@ -53,6 +53,7 @@ i18n      = require 'modules.i18n'
 Timer     = require 'modules.hump.timer'
 HUE       = require 'modules.colors'
 Parallax  = require 'modules.parallax'
+Binser    = require "modules.binser"
 
 -- Love2D shortcuts
 g = love.graphics
@@ -187,6 +188,7 @@ function love.visible(visible)
 end
 
 function love.quit()
+  game:destroy()
   Log.info('Quit app')
 end
 
