@@ -61,10 +61,11 @@ function Dust:update(dt)
 end
 
 function Dust:draw()
-  local w = love.graphics.getLineWidth()
-  love.graphics.setLineWidth(4)
+  local w = g.getLineWidth()
+  g.setColor(255,255,255,255)
+  g.setLineWidth(4)
   Entity.draw(self)
-  love.graphics.setLineWidth(w)
+  g.setLineWidth(w)
 end
 
 return Dust

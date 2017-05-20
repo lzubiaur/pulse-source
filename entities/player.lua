@@ -3,6 +3,7 @@
 local Entity = require 'entities.entity'
 local Ground = require 'entities.ground'
 local Dust   = require 'entities.dust'
+local Trail  = require 'entities.trail'
 
 local Player = Class('Player', Entity)
 
@@ -25,6 +26,13 @@ function Player:initialize(world, x,y)
   self.longRotTween = Tween.new(0.3,self,{angle = 180})
 
   Beholder.observe('ResetGame',function() self:onResetGame() end)
+
+  self.timer = Timer.new()
+  self.timer:every(0.05,function() self:createTrail() end)
+end
+
+function Player:createTrail()
+  Trail:new(self.world,self.x,self.y,self.w,self.h,self.angle)
 end
 
 function Player:onResetGame()
@@ -90,6 +98,8 @@ function Player:rotate(dt)
 end
 
 function Player:update(dt)
+  if self.jumps > 0 then self.timer:update(dt) end
+
   -- TODO Fix maximum jump height?
   self:applyGravity(dt)
   self:clampVelocity()

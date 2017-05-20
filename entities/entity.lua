@@ -49,6 +49,7 @@ function Entity:clampVelocity()
 end
 
 function Entity:destroy()
+  -- Log.debug('Destroyed',self.class.name)
   self.world:remove(self)
 end
 
