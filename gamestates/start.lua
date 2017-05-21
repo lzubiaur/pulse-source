@@ -39,7 +39,6 @@ function Start:draw()
 end
 
 function Start:update(dt)
-
   self.progress.tween:update(self.progress.dir * dt)
   self:updateShaders(dt,self.progress.shift,self.progress.alpha)
   Timer.update(dt)
@@ -48,8 +47,8 @@ end
 function Start:fadeout()
   self.progress.dir = -1
   self.timer = Timer.after(self.progress.duration,function()
-    self.nextState = 'Play'
-    self:gotoState('Loading')
+    -- self.nextState = 'Play'
+    self:gotoState('Play')
   end)
 end
 
@@ -58,8 +57,6 @@ function Start:keypressed(key, scancode, isRepeat)
     if key == 'space' then
       self.touchEnabled = false
       self:fadeout()
-    elseif key == 'c' then
-      offsetHuePalette(conf.hueOffset)
     end
   end
 end

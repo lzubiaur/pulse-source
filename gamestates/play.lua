@@ -16,15 +16,15 @@ function Play:enteredState()
   -- Must clear the timer on entering the scene or old timer will still running
   Timer.clear()
 
-  self.musicDuration = self.music:getDuration('seconds')
-
   self.isReleased = true -- touch flag to check touch is "repeat"
 
   -- Create the physics world
   self.world = Bump.newWorld(conf.cellSize)
 
-  -- Load the game map
-  local map = self:loadMap(self.world, 'resources/maps/map01.lua')
+  -- Load the game map and resources
+  local map = self:loadMap(self.world,string.format('resources/maps/map%02d.lua',GameState.cur))
+
+  self.musicDuration = self.music:getDuration('seconds')
 
   -- Load player position from map
   local x,y = map:convertTileToPixel(map.properties.px,map.properties.py)
@@ -64,7 +64,9 @@ function Play:enteredState()
   Beholder.observe('Gameover',function() self:onGameOver() end)
   Beholder.observe('ResetGame',function() self:onResetGame() end)
 
-  Beholder.observe(function(...) Log.debug('Event triggered > ',...) end)
+  if conf.build == 'debug' then
+    Beholder.observe(function(...) Log.debug('Event triggered > ',...) end)
+  end
 
   self:pushState('GameplayIn')
 end
@@ -82,6 +84,8 @@ function Play:loadMap(world, filename)
   -- STI provides a bump plugin but since we don't use tiles we'll use a
   -- custom loader
   local map = STI(filename)
+
+  self.music = love.audio.newSource(map.properties.music,'stream')
 
   for _,o in pairs(map.layers['Ground'].objects) do
     Ground:new(world,o.x,o.y,o.width,o.height)

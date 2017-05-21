@@ -88,8 +88,9 @@ function Entity:loadState()
   if not self.id then
     error('No ID for entity',self.class.name)
   end
-  if GameState.levels[1] == nil then return nil end
-  return GameState.levels[1][self.id]
+  local i = GameState.cur
+  if GameState.levels[i] == nil then return nil end
+  return GameState.levels[i][self.id]
 end
 
 -- TODO use current level id
@@ -97,8 +98,11 @@ function Entity:saveState(state)
   if not self.id then
     error('No ID for entity', self.class.name)
   end
-  GameState.levels[1] = GameState[1] or {}
-  GameState.levels[1][self.id] = state
+  local i = GameState.cur
+  if not GameState.levels[i] then
+    GameState.levels[i] = {}
+  end
+  GameState.levels[i][self.id] = state
 end
 
 -- Load and restore this entity state from the GameState database.
@@ -112,8 +116,7 @@ function Entity:restoreState()
 end
 
 function Entity:observeOnce(...)
-  local param = {...}
-  local id
+  local param, id = {...}
   local callback = table.remove(param,#param)
   table.insert(param, function(...)
     callback(...)

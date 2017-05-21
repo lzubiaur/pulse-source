@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="237">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="251">
  <properties>
+  <property name="music" value="resources/music/keygen_9000.xm"/>
   <property name="px" type="int" value="0"/>
   <property name="py" type="int" value="12"/>
  </properties>
@@ -45,7 +46,6 @@
   <object id="222" type="Ground" x="16768" y="480" width="2976" height="32"/>
   <object id="223" type="Ground" x="19872" y="480" width="3296" height="32"/>
  </objectgroup>
- <objectgroup name="Object Layer 3"/>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="6688" y="384" width="64" height="64"/>
   <object id="31" type="Spike" x="2784" y="416" width="32" height="32"/>
@@ -102,7 +102,6 @@
   <object id="202" type="Spike" x="18048" y="448" width="192" height="32"/>
   <object id="203" type="Spike" x="18624" y="384" width="64" height="32"/>
   <object id="204" type="Spike" x="18400" y="448" width="64" height="32"/>
-  <object id="205" type="Spike" x="18848" y="448" width="64" height="32"/>
   <object id="206" type="Spike" x="14592" y="384" width="64" height="32"/>
   <object id="208" type="Spike" x="14816" y="448" width="64" height="32"/>
   <object id="211" type="Spike" x="15040" y="448" width="64" height="32"/>
@@ -112,12 +111,17 @@
   <object id="215" type="Spike" x="15264" y="448" width="64" height="32"/>
   <object id="216" type="Spike" x="16160" y="448" width="64" height="32"/>
   <object id="217" type="Spike" x="16384" y="384" width="64" height="32"/>
-  <object id="218" type="Spike" x="19072" y="448" width="64" height="32"/>
-  <object id="219" type="Spike" x="19296" y="448" width="64" height="32"/>
-  <object id="220" type="Checkpoint" x="19456" y="320" width="64" height="64"/>
+  <object id="220" type="Checkpoint" x="19200" y="416" width="64" height="64"/>
   <object id="224" type="Checkpoint" x="13376" y="416" width="64" height="64"/>
   <object id="232" type="Coin" x="10432" y="480" width="32" height="32"/>
-  <object id="233" type="Debug.Player" x="9856" y="384" width="64" height="64"/>
   <object id="235" type="Coin" x="13024" y="480" width="32" height="32"/>
+  <object id="241" type="Coin" x="4096" y="480" width="32" height="32"/>
+  <object id="242" type="Coin" x="1280" y="320" width="32" height="32"/>
+  <object id="244" type="Coin" x="7392" y="416" width="32" height="32"/>
+  <object id="245" type="Coin" x="2560" y="320" width="32" height="32"/>
+  <object id="246" type="Coin" x="2336" y="224" width="32" height="32"/>
+  <object id="247" type="Coin" x="1568" y="320" width="32" height="32"/>
+  <object id="249" type="Coin" x="5856" y="416" width="32" height="32"/>
+  <object id="250" type="Coin" x="9312" y="480" width="32" height="32"/>
  </objectgroup>
 </map>
