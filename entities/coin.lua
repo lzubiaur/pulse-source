@@ -17,7 +17,8 @@ end
 
 function Coin:draw()
   g.setColor(255,255,0,255)
-  Entity.draw(self)
+  local x,y = self:getCenter()
+  g.circle('line',x,y,self.w/2)
 end
 
 -- Coin "Checked" state
@@ -27,7 +28,7 @@ end
 local Checked = Coin:addState('Checked')
 
 function Checked:enteredState()
-  Log.info('Enter state "Coin Checked"')
+  -- Log.info('Enter state "Coin Checked"')
   self:observeOnce('Checkpoint',function()
     self:saveState { name = 'Saved' }
     self:gotoState('Saved')
@@ -36,11 +37,18 @@ function Checked:enteredState()
     self:observeOnce('Coin',self,function() self:pushState('Checked') end)
     self:popState()
   end)
+  self.oy,self.alpha = 0,255
+  self.tween = Tween.new(0.3,self,{oy=100,alpha=0})
+end
+
+function Checked:update(dt)
+  self.tween:update(dt)
 end
 
 function Checked:draw()
-  g.setColor(32,32,32,255)
-  Entity.draw(self)
+  g.setColor(255,255,0,self.alpha)
+  local x,y = self:getCenter()
+  g.circle('line',x,y-self.oy,self.w/2)
 end
 
 -- Coin "Saved" state
@@ -53,8 +61,9 @@ local Saved = Coin:addState('Saved')
 -- end
 
 function Saved:draw()
-  g.setColor(60,60,60,255)
-  Entity.draw(self)
+  g.setColor(128,128,128,255)
+  local x,y = self:getCenter()
+  g.circle('line',x,y,self.w/2)
 end
 
 return Coin
