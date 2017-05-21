@@ -118,6 +118,6 @@
   <object id="224" type="Checkpoint" x="13376" y="416" width="64" height="64"/>
   <object id="232" type="Coin" x="10432" y="480" width="32" height="32"/>
   <object id="233" type="Debug.Player" x="9856" y="384" width="64" height="64"/>
-  <object id="235" type="Coin" x="10912" y="352" width="32" height="32"/>
+  <object id="235" type="Coin" x="13024" y="480" width="32" height="32"/>
  </objectgroup>
 </map>

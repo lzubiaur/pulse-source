@@ -9,6 +9,9 @@ function Checkpoint:initialize(world,x,y)
   self.alpha = 180
   self.scale = 1
   self.tween = Tween.new(0.3,self,{alpha = 0,scale=2})
+  self:observeOnce('Checkpoint',self,function()
+    self.touched = true
+  end)
 end
 
 function Checkpoint:draw()
@@ -28,13 +31,9 @@ function Checkpoint:draw()
 end
 
 function Checkpoint:update(dt)
-  if self.destroyed and self.tween:update(dt) then
+  if self.touched and self.tween:update(dt) then
     Entity.destroy(self)
   end
-end
-
-function Checkpoint:destroy()
-  self.destroyed = true
 end
 
 return Checkpoint

@@ -83,6 +83,7 @@ function Entity:draw()
   g.rectangle('line',self.x,self.y,self.w,self.h)
 end
 
+-- TODO use current level id
 function Entity:loadState()
   if not self.id then
     error('No ID for entity',self.class.name)
@@ -91,6 +92,7 @@ function Entity:loadState()
   return GameState.levels[1][self.id]
 end
 
+-- TODO use current level id
 function Entity:saveState(state)
   if not self.id then
     error('No ID for entity', self.class.name)
@@ -99,11 +101,26 @@ function Entity:saveState(state)
   GameState.levels[1][self.id] = state
 end
 
+-- Load and restore this entity state from the GameState database.
+-- The entity must have an ID or an error is raised.
 function Entity:restoreState()
   local state = self:loadState()
   if state then
-    self:gotoState(state.state)
+    self:gotoState(state.name)
   end
+  return state
+end
+
+function Entity:observeOnce(...)
+  local param = {...}
+  local id
+  local callback = table.remove(param,#param)
+  table.insert(param, function(...)
+    callback(...)
+    Beholder.stopObserving(id)
+  end)
+  id = Beholder.observe(unpack(param))
+  return id
 end
 
 return Entity

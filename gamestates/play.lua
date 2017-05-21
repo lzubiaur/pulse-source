@@ -64,6 +64,8 @@ function Play:enteredState()
   Beholder.observe('Gameover',function() self:onGameOver() end)
   Beholder.observe('ResetGame',function() self:onResetGame() end)
 
+  Beholder.observe(function(...) Log.debug('Event triggered > ',...) end)
+
   self:pushState('GameplayIn')
 end
 

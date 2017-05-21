@@ -63,7 +63,7 @@ function Game:loadGameState()
     local data,len = fs.read(GameState.path)
     data,len = Binser.deserialize(data)
     GameState = data[1]
-    print('Load game state',Inspect(GameState))
+    print('Game state = ',Inspect(GameState))
   end
 end
 
