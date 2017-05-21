@@ -1,4 +1,5 @@
 -- loading.lua
+-- DEPRECATED. Loading game assets is done while loading the map.
 
 local Game = require 'game'
 
