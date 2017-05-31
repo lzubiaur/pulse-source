@@ -38,8 +38,8 @@ function Game:initialize()
 
   i18n.loadFile('resources/i18n.lua')
 
-  self.nextState = 'Start'
-  self:gotoState('Loading')
+  -- self.nextState = 'Start'
+  self:gotoState('Start')
 end
 
 function Game:destroy()
@@ -63,7 +63,7 @@ function Game:loadGameState()
     local data,len = fs.read(GameState.path)
     data,len = Binser.deserialize(data)
     GameState = data[1]
-    print('Game state = ',Inspect(GameState))
+    Log.debug('Game state = ',Inspect(GameState))
   end
 end
 

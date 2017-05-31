@@ -6,7 +6,7 @@ local platform = love.system.getOS()
 
 -- Global game configuration
 conf = {
-  build = 'debug',
+  build = 'debug', -- release/debug build
   -- The game fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
   -- Bump world cell size. Should be a multiple of the map's tile size.
@@ -116,8 +116,10 @@ require 'gamestates.start'
 require 'gamestates.play'
 require 'gamestates.paused'
 require 'gamestates.transitions'
--- TODO include only in debug mode build
-require 'gamestates.debug.play_debug'
+require 'gamestates.win'
+if conf.build == 'debug' then
+  require 'gamestates.debug.play_debug'
+end
 
 -- The global game instance
 game = nil

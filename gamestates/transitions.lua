@@ -31,7 +31,7 @@ function GameplayIn:update(dt)
   local x,y = self.camera:getPosition()
   local px, py = self.player:getCenter()
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
-  self.parallax:setTranslation(px,py)
+  -- self.parallax:setTranslation(px,py)
 end
 
 function GameplayIn:keypressed(key, scancode, isRepeat)

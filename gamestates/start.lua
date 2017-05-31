@@ -7,6 +7,7 @@ local Start = Game:addState('Start')
 function Start:enteredState()
   Log.info('Entered the state "Start"')
 
+  self.font = g.newFont('resources/fonts/pzim3x5.fnt','resources/fonts/pzim3x5.png')
   g.setFont(self.font)
 
   self.progress = {
@@ -29,12 +30,14 @@ function Start:enteredState()
 end
 
 function Start:draw()
+  local text = i18n(conf.mobileBuild and 'start_mobile' or 'start_desktop')
+  local h = self.font:getHeight()
+
   Push:start()
     g.clear(to_rgb(palette.bg))
     g.setColor(to_rgb(palette.base))
     g.rectangle('line',0,0,conf.width,conf.height)
-    g.line(0,180,640,180)
-    g.print(i18n(conf.mobileBuild and 'start_mobile' or 'start_desktop'),100,100)
+    g.printf(text,0,conf.height/2-h/2,conf.width,'center')
   Push:finish()
 end
 
@@ -53,11 +56,13 @@ function Start:fadeout()
 end
 
 function Start:keypressed(key, scancode, isRepeat)
-  if self.touchEnabled and not isRepeat then
-    if key == 'space' then
-      self.touchEnabled = false
-      self:fadeout()
-    end
+  if not self.touchEnabled and isRepeat then return end
+  if key == 'space' then
+    self.touchEnabled = false
+    self:fadeout()
+  -- On Android the back button is mapped to the 'escape' key
+  elseif key == 'escape' then
+    love.event.push('quit')
   end
 end
 

@@ -108,8 +108,10 @@ function Player:update(dt)
 
   self.x, self.y, cols, len = self.world:move(self, self.x,self.y, Player.filter)
   self:checkCollisions(dt, len, cols)
-  -- Debug.update('Player',Lume.format('Position: {x}/{y} Velocity: {vx}/{vy}',self))
-  Debug.update('Player',string.format('velocity: %.3f/%.3f',self.vx,self.vy))
+  if conf.build == 'debug' then
+    -- Debug.update('Player',Lume.format('Position: {x}/{y} Velocity: {vx}/{vy}',self))
+    Debug.update('Player',string.format('velocity: %.3f/%.3f',self.vx,self.vy))
+  end
 end
 
 function Player:checkCollisions(dt,len, cols)
@@ -128,6 +130,9 @@ function Player:checkCollisions(dt,len, cols)
         self.jumps = self.jumps - 1
       end
     elseif col.other.class.name == 'Checkpoint' then
+      if col.other.isGoal then
+        Beholder.trigger('Win')
+      end
       self.cpx,self.cpy = col.other.x, col.other.y
       Beholder.trigger('Checkpoint',col.other)
     elseif col.other.class.name == 'Coin' then

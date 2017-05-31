@@ -50,19 +50,24 @@ function Play:enteredState()
   local px, py = self.player:getCenter()
   self.camera:setPosition(x + conf.camOffsetX, y)
 
-  self.parallax = Parallax(conf.width,conf.height, {offsetX = 0, offsetY = 0})
-  self.parallax:addLayer('layer0',1,{relativeScale=0.2})
-  self.parallax:addLayer('layer1',1,{relativeScale=0.4})
-  self.parallax:addLayer('layer2',1,{relativeScale=0.8})
-  self.parallax:setTranslation(px,py)
-
-  self.vertices = {}
-  for i=1,3 do
-    table.insert(self.vertices,self:generateBackground())
-  end
+  -- self.parallax = Parallax(conf.width,conf.height, {offsetX = 0, offsetY = 0})
+  -- self.parallax:addLayer('layer0',1,{relativeScale=0.2})
+  -- self.parallax:addLayer('layer1',1,{relativeScale=0.4})
+  -- self.parallax:addLayer('layer2',1,{relativeScale=0.8})
+  -- self.parallax:setTranslation(px,py)
+  --
+  -- self.vertices = {}
+  -- for i=1,3 do
+  --   table.insert(self.vertices,self:generateBackground())
+  -- end
 
   Beholder.observe('Gameover',function() self:onGameOver() end)
   Beholder.observe('ResetGame',function() self:onResetGame() end)
+  Beholder.observe('Win',function()
+    Timer.after(0.5,function()
+      self:pushState('Win')
+    end)
+  end)
 
   if conf.build == 'debug' then
     Beholder.observe(function(...) Log.debug('Event triggered > ',...) end)
@@ -74,6 +79,7 @@ end
 function Play:exitedState()
   Log.info 'Exited state Play'
   -- TODO clean beholder observers?
+  self.music:stop()
   Timer.clear()
 end
 
@@ -93,7 +99,8 @@ function Play:loadMap(world, filename)
 
   for _,o in pairs(map.layers['Checkpoint'].objects) do
     if o.type == 'Checkpoint' then
-      Checkpoint:new(world,o.x,o.y)
+      local c = Checkpoint:new(world,o.x,o.y)
+      if o.name == 'Goal' then c.isGoal = true end
     elseif o.type == 'Spike' then
       Laser:new(world,o.x,o.y,o.width,o.height)
     elseif o.type == 'Coin' then
@@ -123,32 +130,36 @@ function Play:generateBackground()
   return t
 end
 
-function Play:drawParallax()
-  self.parallax:push('layer0')
-  g.setColor(255,255,255,32)
-    g.circle('fill',600,200,150)
-  g.setColor(255,255,255,32)
-    g.line(self.vertices[1])
-  self.parallax:pop()
-  self.parallax:push('layer1')
-    g.line(self.vertices[2])
-  self.parallax:pop()
-  self.parallax:push('layer2')
-    g.line(self.vertices[3])
-  self.parallax:pop()
+-- function Play:drawParallax()
+--   self.parallax:push('layer0')
+--   g.setColor(255,255,255,32)
+--     g.circle('fill',600,200,150)
+--   g.setColor(255,255,255,32)
+--     g.line(self.vertices[1])
+--   self.parallax:pop()
+--   self.parallax:push('layer1')
+--     g.line(self.vertices[2])
+--   self.parallax:pop()
+--   self.parallax:push('layer2')
+--     g.line(self.vertices[3])
+--   self.parallax:pop()
+-- end
+
+function Play:drawWorld(l,t,w,h)
+    -- Only draw visible entities
+    local items,len = self.world:queryRect(l,t,w,h)
+    table.sort(items,Entity.sortByZOrder)
+    Lume.each(items,'draw')
 end
 
 function Play:draw()
   Push:start()
   g.clear(to_rgb(palette.bg))
 
-  self:drawParallax()
+  -- self:drawParallax()
 
   self.camera:draw(function(l,t,w,h)
-    -- Only draw visible entities
-    local items,len = self.world:queryRect(l,t,w,h)
-    table.sort(items,Entity.sortByZOrder)
-    Lume.each(items,'draw')
+    self:drawWorld(l,t,w,h) -- Call a function so it can be override by other state
   end)
   Push:finish()
 end
@@ -188,16 +199,16 @@ function Play:update(dt)
   local x,y = self.camera:getPosition()
   local px, py = player:getCenter()
   self.camera:setPosition(px + conf.camOffsetX, Lume.lerp(y,py,0.05))
-  self.parallax:setTranslation(px,py)
+  -- self.parallax:setTranslation(px,py)
   -- self.parallax:update(dt) -- not required
 
 end
 
 function Play:touchpressed(id, x, y, dx, dy, pressure)
-  if self.isReleased then
+  -- if self.isReleased then
     self.player:jump()
-  end
-  self.isReleased = false
+  -- end
+  -- self.isReleased = false
 end
 
 function Play:touchmoved(id, x, y, dx, dy, pressure)
@@ -210,6 +221,8 @@ end
 function Play:keypressed(key, scancode, isrepeat)
   if key == 'space' and not isrepeat then
     self.player:jump()
+  elseif key == 'escape' then
+    self:gotoState('Start')
   elseif key == 'p' then
     self:pushState('Paused')
   elseif key == 'd' then
