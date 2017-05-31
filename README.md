@@ -1,4 +1,4 @@
-##Gameplay ideas
+## Gameplay ideas
 * slow motion. when the player touch a special item the gameplay is slower so it become easier.
 
 
