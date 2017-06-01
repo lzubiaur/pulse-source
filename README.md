@@ -1,3 +1,11 @@
+## Android
+Version of Love2D android 0.10.2
+
+The following files have been updated manually:
+
+* Filesystem.cpp (jni/love/src/modules/filesystem/physfs/Filesystem.cpp) because
+of a bug when writing on the internal storage. See https://bitbucket.org/MartinFelis/love-android-sdl2/issues/132/could-not-set-write-directory-on-android-6#
+
 ## Gameplay ideas
 * slow motion. when the player touch a special item the gameplay is slower so it become easier.
 
