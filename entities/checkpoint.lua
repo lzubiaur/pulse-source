@@ -32,6 +32,7 @@ end
 
 function Checkpoint:update(dt)
   if self.touched and self.tween:update(dt) then
+    game:getCurrentLevelState().checkpoint = { self.x, self.y }
     Entity.destroy(self)
   end
 end

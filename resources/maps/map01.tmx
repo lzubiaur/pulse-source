@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="269">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="271">
  <properties>
   <property name="music" value="resources/music/keygen_9000.xm"/>
   <property name="px" type="int" value="0"/>
@@ -34,16 +34,17 @@
   <object id="121" type="Ground" x="10784" y="288" width="32" height="32"/>
   <object id="123" type="Ground" x="11232" y="288" width="32" height="32"/>
   <object id="124" type="Ground" x="11648" y="256" width="64" height="256"/>
-  <object id="125" type="Ground" x="11776" y="352" width="64" height="160"/>
+  <object id="125" type="Ground" x="11776" y="320" width="64" height="192"/>
   <object id="126" type="Ground" x="11008" y="288" width="32" height="32"/>
   <object id="128" type="Ground" x="11520" y="192" width="64" height="320"/>
-  <object id="130" type="Ground" x="12096" y="384" width="288" height="64"/>
+  <object id="130" type="Ground" x="12192" y="448" width="288" height="64"/>
   <object id="142" type="Ground" x="12544" y="384" width="128" height="32"/>
   <object id="143" type="Ground" x="12736" y="256" width="608" height="32"/>
   <object id="144" type="Ground" x="12736" y="480" width="32" height="32"/>
   <object id="146" type="Ground" x="12928" y="480" width="32" height="32"/>
   <object id="147" type="Ground" x="13280" y="480" width="3488" height="32"/>
   <object id="222" type="Ground" x="16928" y="480" width="864" height="32"/>
+  <object id="269" type="Ground" x="11904" y="384" width="64" height="128"/>
  </objectgroup>
  <objectgroup name="Checkpoint">
   <object id="28" type="Checkpoint" x="6688" y="384" width="64" height="64"/>
@@ -66,7 +67,7 @@
   <object id="97" type="Spike" x="9504" y="352" width="480" height="32"/>
   <object id="98" type="Spike" x="10144" y="448" width="128" height="32"/>
   <object id="101" type="Spike" x="10400" y="0" width="32" height="288"/>
-  <object id="131" type="Spike" x="11904" y="384" width="128" height="64"/>
+  <object id="131" type="Spike" x="12064" y="448" width="128" height="64"/>
   <object id="132" type="Checkpoint" x="9600" y="384" width="64" height="64"/>
   <object id="136" type="Spike" x="11552" y="0" width="64" height="96"/>
   <object id="137" type="Spike" x="11680" y="0" width="64" height="160"/>
@@ -101,5 +102,6 @@
   <object id="265" type="Spike" x="16736" y="256" width="32" height="64"/>
   <object id="266" type="Spike" x="16544" y="256" width="32" height="64"/>
   <object id="267" type="Spike" x="16736" y="448" width="32" height="32"/>
+  <object id="270" type="Spike" x="11936" y="0" width="64" height="288"/>
  </objectgroup>
 </map>

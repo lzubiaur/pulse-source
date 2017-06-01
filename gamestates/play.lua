@@ -22,7 +22,7 @@ function Play:enteredState()
   self.world = Bump.newWorld(conf.cellSize)
 
   -- Load the game map and resources
-  local map = self:loadMap(self.world,string.format('resources/maps/map%02d.lua',GameState.cur))
+  local map = self:loadMap(self.world,string.format('resources/maps/map%02d.lua',self.state.cur))
 
   self.musicDuration = self.music:getDuration('seconds')
 
@@ -92,6 +92,12 @@ function Play:loadMap(world, filename)
   local map = STI(filename)
 
   self.music = love.audio.newSource(map.properties.music,'stream')
+
+  local checkpoint = self:getCurrentLevelState().checkpoint
+  if checkpoint then
+    Log.debug(checkpoint[1],checkpoint[2])
+    map.properties.px,map.properties.py = map:convertPixelToTile(checkpoint[1],checkpoint[2])
+  end
 
   for _,o in pairs(map.layers['Ground'].objects) do
     Ground:new(world,o.x,o.y,o.width,o.height)

@@ -6,15 +6,14 @@ local time = 0
 local shader1 = nil
 -- local shader2 = nil
 
-GameState = {
-  path = 'db.data', -- this database filename
-  cur = 1, -- current level
-  levels = { -- Array with all levels states.
-  },
-}
-
 function Game:initialize()
   Log.info('Create game instance.')
+
+  self.state = {
+    path = 'db.data', -- this database filename
+    cur = 1, -- current level
+    levels = {} -- Array with all levels states.
+  }
 
   -- love.filesystem.remove(GameState.path)
   self:loadGameState()
@@ -47,23 +46,24 @@ function Game:destroy()
 end
 
 function Game:saveGameState()
-  local data = Binser.serialize(GameState)
+  Log.info('Serialize game state',Inspect(self.state))
+  local data = Binser.serialize(self.state)
   if not data then
     Log.error('Cannot serialize game state')
     return
   end
-  if not love.filesystem.write(GameState.path,data) then
+  if not love.filesystem.write(self.state.path,data) then
     Log.info('Cannot write to database',path)
   end
 end
 
 function Game:loadGameState()
   local fs = love.filesystem
-  if fs.exists(GameState.path) then
-    local data,len = fs.read(GameState.path)
+  if fs.exists(self.state.path) then
+    local data,len = fs.read(self.state.path)
     data,len = Binser.deserialize(data)
-    GameState = data[1]
-    Log.debug('Game state = ',Inspect(GameState))
+    self.state = data[1]
+    Log.debug('Game state = ',Inspect(self.state))
   end
 end
 
@@ -96,6 +96,19 @@ function Game:touchmoved(id, x, y, dx, dy, pressure)
 end
 
 function Game:touchreleased(id, x, y, dx, dy, pressure)
+end
+
+-- Lazy create and returns the current level state
+function Game:getCurrentLevelState()
+  local state,i = self.state,self.state.cur
+  if not state.levels[i] then
+    state.levels[i] = {
+      score = 0,
+      checkpoint = nil,
+      entities = {}
+    }
+  end
+  return state.levels[i]
 end
 
 return Game

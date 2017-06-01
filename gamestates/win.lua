@@ -5,6 +5,8 @@ local Win = Game:addState('Win')
 
 function Win:enteredState()
   Log.debug('Entered state Win')
+  -- reset the level checkpoint
+  self:getCurrentLevelState().checkpoint = nil
 end
 
 function Win:update(dt)

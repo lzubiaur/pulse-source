@@ -83,29 +83,21 @@ function Entity:draw()
   g.rectangle('line',self.x,self.y,self.w,self.h)
 end
 
--- TODO use current level id
 function Entity:loadState()
   if not self.id then
     error('No ID for entity',self.class.name)
   end
-  local i = GameState.cur
-  if GameState.levels[i] == nil then return nil end
-  return GameState.levels[i][self.id]
+  return game:getCurrentLevelState().entities[self.id]
 end
 
--- TODO use current level id
 function Entity:saveState(state)
   if not self.id then
     error('No ID for entity', self.class.name)
   end
-  local i = GameState.cur
-  if not GameState.levels[i] then
-    GameState.levels[i] = {}
-  end
-  GameState.levels[i][self.id] = state
+  game:getCurrentLevelState().entities[self.id] = state
 end
 
--- Load and restore this entity state from the GameState database.
+-- Load and restore this entity state from the Game.State database.
 -- The entity must have an ID or an error is raised.
 function Entity:restoreState()
   local state = self:loadState()
