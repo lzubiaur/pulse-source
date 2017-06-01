@@ -8,6 +8,11 @@ local GameplayIn = Game:addState('GameplayIn')
 
 function GameplayIn:enteredState()
   Log.info 'Enter state GameplayIn'
+
+  Log.debug('Before gc (MB)',collectgarbage("count")/1024)
+  collectgarbage('collect')
+  Log.debug('After gc (MB)',collectgarbage("count")/1024)
+
   self.progress.tween:reset()
 
   local position = self.player.x/conf.playerVelocity
