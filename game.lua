@@ -52,8 +52,9 @@ function Game:saveGameState()
     Log.error('Cannot serialize game state')
     return
   end
-  if not love.filesystem.write(self.state.path,data) then
-    Log.info('Cannot write to database',path)
+  local success,msg = love.filesystem.write(self.state.path,data)
+  if not success then
+    Log.error('Cannot write to database:',msg)
   end
 end
 
@@ -61,9 +62,17 @@ function Game:loadGameState()
   local fs = love.filesystem
   if fs.exists(self.state.path) then
     local data,len = fs.read(self.state.path)
+    if not data then
+      Log.error('Cannot read file:',len)
+      return
+    end
     data,len = Binser.deserialize(data)
-    self.state = data[1]
-    Log.debug('Game state = ',Inspect(self.state))
+    if data then
+      self.state = data[1]
+      Log.debug('Game state = ',Inspect(self.state))
+    else
+      Log.error('Cannot read deserialize database')
+    end
   end
 end
 

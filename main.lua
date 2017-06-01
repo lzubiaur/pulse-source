@@ -1,12 +1,11 @@
 -- main.lua
 
-love.math.setRandomSeed(os.time())
-
 local platform = love.system.getOS()
 
 -- Global game configuration
 conf = {
-  build = 'debug', -- release/debug build
+  version = require 'version',
+  build = require 'build', -- release/debug build
   -- The game fixed resolution. Use a 16:9 aspect ratio
   width = 640, height = 360,
   -- Bump world cell size. Should be a multiple of the map's tile size.
@@ -124,6 +123,19 @@ end
 -- The global game instance
 game = nil
 
+function testSaveDirectory()
+  love.filesystem.setIdentity('pulse')
+  Log.debug('App identity',love.filesystem.getIdentity())
+  Log.debug('Save directory:',love.filesystem.getSaveDirectory())
+  local path = 'myfile.txt'
+  Log.debug('Real directory:',love.filesystem.getRealDirectory(path))
+  Log.debug('File exists:',love.filesystem.exists(path))
+  Log.debug('Write file:',love.filesystem.write(path,'hello'))
+  Log.debug('File exists:',love.filesystem.exists(path))
+  local data,size = love.filesystem.read(path)
+  Log.debug('Read file:',size == string.len('hello'))
+end
+
 function love.load()
   -- Avoid anti-alising/blur when scaling. Useful for pixel art.
   -- love.graphics.setDefaultFilter('nearest', 'nearest', 0)
@@ -133,6 +145,7 @@ function love.load()
 
   if conf.build == 'debug' then
     Debug.init()
+    testSaveDirectory()
   end
 
   -- Gets the width and height of the window
