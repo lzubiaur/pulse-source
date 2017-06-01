@@ -10,6 +10,8 @@ function Start:enteredState()
   self.font = g.newFont('resources/fonts/pzim3x5.fnt','resources/fonts/pzim3x5.png')
   g.setFont(self.font)
 
+  self.logo = g.newImage('resources/logo.png')
+
   self.progress = {
     alpha = 0,
     shift = 80,
@@ -37,7 +39,8 @@ function Start:draw()
     g.clear(to_rgb(palette.bg))
     g.setColor(to_rgb(palette.base))
     g.rectangle('line',0,0,conf.width,conf.height)
-    g.printf(text,0,conf.height/2-h/2,conf.width,'center')
+    g.draw(self.logo,conf.width*.5-self.logo:getWidth()*.5,conf.height*.5-self.logo:getHeight()*.5)
+    g.printf(text,0,conf.height*.7-h*.5,conf.width,'center')
   Push:finish()
 end
 
