@@ -3,7 +3,7 @@
 LOVE_ANDROID=../love-10.2-android-source
 
 if [ -z "$1" -o "$1" != "debug" -a "$1" != "release" ]; then
-  echo "'$1' is not valid. Either 'debug' or 'release' is required."
+  echo "ERROR: '$1' is not valid. Either 'debug' or 'release' is required."
   exit -1
 fi
 
@@ -11,7 +11,7 @@ fi
 echo "return '$1'" > build.lua
 # Create the game zip. Must not contain the root folder
 rm $LOVE_ANDROID/assets/game.love
-zip -r $LOVE_ANDROID/assets/game.love build.lua version.lua game.lua main.lua resources conf.lua entities gamestates modules
+zip -r $LOVE_ANDROID/assets/game.love build.lua version.lua game.lua main.lua resources conf.lua entities gamestates modules -x *.DS_Store
 
 if [ "$1" == "app" ]; then
   # Unlock the screen

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="271">
+<map version="1.0.0" orientation="orthogonal" renderorder="right-down" width="2000" height="16" tilewidth="32" tileheight="32" nextobjectid="279">
  <properties>
   <property name="music" value="resources/music/keygen_9000.xm"/>
   <property name="px" type="int" value="0"/>
@@ -42,8 +42,8 @@
   <object id="143" type="Ground" x="12736" y="256" width="608" height="32"/>
   <object id="144" type="Ground" x="12736" y="480" width="32" height="32"/>
   <object id="146" type="Ground" x="12928" y="480" width="32" height="32"/>
-  <object id="147" type="Ground" x="13280" y="480" width="3488" height="32"/>
-  <object id="222" type="Ground" x="16928" y="480" width="864" height="32"/>
+  <object id="147" type="Ground" x="13280" y="480" width="3552" height="32"/>
+  <object id="222" type="Ground" x="17056" y="480" width="736" height="32"/>
   <object id="269" type="Ground" x="11904" y="384" width="64" height="128"/>
  </objectgroup>
  <objectgroup name="Checkpoint">
@@ -76,32 +76,38 @@
   <object id="149" type="Spike" x="12768" y="288" width="160" height="32"/>
   <object id="155" type="Spike" x="8416" y="448" width="64" height="64"/>
   <object id="192" type="Spike" x="13888" y="448" width="32" height="32"/>
-  <object id="193" type="Spike" x="14080" y="448" width="32" height="32"/>
-  <object id="194" type="Spike" x="14272" y="448" width="32" height="32"/>
+  <object id="193" type="Spike" x="14112" y="448" width="32" height="32"/>
+  <object id="194" type="Spike" x="14336" y="448" width="32" height="32"/>
   <object id="213" type="Spike" x="15712" y="448" width="64" height="32"/>
   <object id="216" type="Spike" x="15936" y="448" width="192" height="32"/>
   <object id="224" type="Checkpoint" x="13376" y="416" width="64" height="64"/>
   <object id="232" type="Coin" x="10432" y="480" width="32" height="32"/>
-  <object id="235" type="Coin" x="13024" y="480" width="32" height="32"/>
-  <object id="241" type="Coin" x="4096" y="480" width="32" height="32"/>
+  <object id="235" type="Coin" x="13088" y="480" width="32" height="32"/>
+  <object id="241" type="Coin" x="4128" y="448" width="32" height="32"/>
   <object id="242" type="Coin" x="1280" y="320" width="32" height="32"/>
-  <object id="244" type="Coin" x="7392" y="416" width="32" height="32"/>
+  <object id="244" type="Coin" x="7392" y="384" width="32" height="32"/>
   <object id="245" type="Coin" x="2560" y="320" width="32" height="32"/>
   <object id="246" type="Coin" x="2336" y="224" width="32" height="32"/>
   <object id="247" type="Coin" x="1568" y="320" width="32" height="32"/>
-  <object id="249" type="Coin" x="5856" y="416" width="32" height="32"/>
-  <object id="250" type="Coin" x="9312" y="480" width="32" height="32"/>
+  <object id="249" type="Coin" x="5856" y="352" width="32" height="32"/>
+  <object id="250" type="Coin" x="9280" y="384" width="32" height="32"/>
   <object id="255" name="Goal" type="Checkpoint" x="17312" y="416" width="64" height="64"/>
-  <object id="257" type="Spike" x="14816" y="448" width="32" height="32"/>
+  <object id="257" type="Spike" x="14784" y="448" width="32" height="32"/>
   <object id="258" type="Spike" x="15008" y="448" width="32" height="32"/>
-  <object id="259" type="Spike" x="15200" y="448" width="32" height="32"/>
+  <object id="259" type="Spike" x="15232" y="448" width="32" height="32"/>
   <object id="260" type="Spike" x="15392" y="416" width="32" height="64"/>
   <object id="261" type="Spike" x="16352" y="448" width="32" height="32"/>
-  <object id="262" type="Spike" x="16544" y="448" width="32" height="32"/>
+  <object id="262" type="Spike" x="16576" y="448" width="32" height="32"/>
   <object id="263" type="Spike" x="16352" y="256" width="32" height="64"/>
-  <object id="265" type="Spike" x="16736" y="256" width="32" height="64"/>
-  <object id="266" type="Spike" x="16544" y="256" width="32" height="64"/>
-  <object id="267" type="Spike" x="16736" y="448" width="32" height="32"/>
-  <object id="270" type="Spike" x="11936" y="0" width="64" height="288"/>
+  <object id="265" type="Spike" x="16800" y="256" width="32" height="64"/>
+  <object id="266" type="Spike" x="16576" y="256" width="32" height="64"/>
+  <object id="267" type="Spike" x="16800" y="448" width="32" height="32"/>
+  <object id="270" type="Spike" x="11936" y="0" width="32" height="288"/>
+  <object id="271" type="Spike" x="11424" y="0" width="64" height="32"/>
+  <object id="272" type="Coin" x="10880" y="288" width="32" height="32"/>
+  <object id="273" type="Debug.Player" x="13504" y="416" width="64" height="64"/>
+  <object id="275" type="Coin" x="14336" y="288" width="32" height="32"/>
+  <object id="276" type="Coin" x="15296" y="416" width="32" height="32"/>
+  <object id="278" type="Coin" x="16928" y="480" width="32" height="32"/>
  </objectgroup>
 </map>

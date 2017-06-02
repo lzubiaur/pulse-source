@@ -124,7 +124,6 @@ end
 game = nil
 
 function testSaveDirectory()
-  love.filesystem.setIdentity('pulse')
   Log.debug('App identity',love.filesystem.getIdentity())
   Log.debug('Save directory:',love.filesystem.getSaveDirectory())
   local path = 'myfile.txt'

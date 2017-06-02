@@ -1,1 +1,1 @@
-return 'releas'
+return 'release'

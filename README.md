@@ -1,14 +1,18 @@
 ## Android
-Version of Love2D android 0.10.2
+Version of Love2D android is 0.10.2
 
-The following files have been updated manually:
-
-* Filesystem.cpp (jni/love/src/modules/filesystem/physfs/Filesystem.cpp) because
+### Internal storage bug
+Edit Filesystem.cpp (jni/love/src/modules/filesystem/physfs/Filesystem.cpp) because
 of a bug when writing on the internal storage. See https://bitbucket.org/MartinFelis/love-android-sdl2/issues/132/could-not-set-write-directory-on-android-6#
+
+### Update application id (package)
+* change the package tag in AndroidManifest.xml
+* change the java activity path (src/org/love/android) to reflect the new package
+* change the package name in the Java sources (DownloadActivity.java, DownloadService.java, GameActivity.java)
+* change JNI class name in jni/love/src/common/android.cpp
 
 ## Gameplay ideas
 * slow motion. when the player touch a special item the gameplay is slower so it become easier.
-
 
 ## TODO
 * add effect to coin (see trail.lua)
