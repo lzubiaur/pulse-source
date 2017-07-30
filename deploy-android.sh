@@ -21,7 +21,7 @@ main.lua
 "
 
 # Write the debug/release configuration
-echo "return '$BUILD'" > common/build.lua
+echo "return '$BUILD'" > build.lua
 
 if [ "$1" == "app" ]; then
   mkdir -p build
