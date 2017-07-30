@@ -5,12 +5,12 @@
 LOVE_ANDROID=../love-android-sdl2
 
 # debug/release
-BUILD=debug
+BUILD=release
 # e.g. com.mycompany.myproject
-PACKAGE=com.voodoocactus.games.pulse
+PACKAGE=com.shiroku.games.pulse
 
 FILES="build.lua
-version.lua 
+version.lua
 game.lua
 entities
 gamestates
