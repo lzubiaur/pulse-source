@@ -148,12 +148,13 @@ function love.load()
   end
 
   -- Gets the width and height of the window
-  local w,h = love.graphics.getDimensions()
+  -- local w,h = love.graphics.getDimensions()
+  local w,h,flags = love.window.getMode()
 
   Push:setupScreen(conf.width, conf.height, w,h, {
     fullscreen = conf.mobileBuild,
     resizable = not conf.mobileBuild,
-    highdpi = true,
+    highdpi = flags.highdpi,
     canvas = true, -- We need canvas for the separate_chroma shader who works only on texture
     stretched = true, -- Keep aspect ratio or strech to borders
     pixelperfect = false,
