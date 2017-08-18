@@ -29,10 +29,11 @@ function Start:enteredState()
 
   Timer.after(0.5,function() self.touchEnabled = true end)
 
+  self.startGame = false
 end
 
 function Start:draw()
-  local text = i18n(conf.mobileBuild and 'start_mobile' or 'start_desktop')
+  -- local text = i18n(conf.mobileBuild and 'start_mobile' or 'start_desktop')
   local h = self.font:getHeight()
 
   Push:start()
@@ -40,7 +41,8 @@ function Start:draw()
     g.setColor(to_rgb(palette.base))
     g.rectangle('line',0,0,conf.width,conf.height)
     g.draw(self.logo,conf.width*.5-self.logo:getWidth()*.5,conf.height*.5-self.logo:getHeight()*.5)
-    g.printf(text,0,conf.height*.7-h*.5,conf.width,'center')
+    -- g.printf(text,0,conf.height*.7-h*.5,conf.width,'center')
+    g.printf('More games',0,conf.height*.9-h*.5,conf.width,'center')
   Push:finish()
 end
 
@@ -69,8 +71,23 @@ function Start:keypressed(key, scancode, isRepeat)
   end
 end
 
-function Start:touchreleased()
-  self:fadeout()
+function Start:touchpressed(id, x, y, dx, dy, pressure)
+  if self.startGame then return end
+  x,y = Push:toGame(x,y)
+  if x < conf.width*.5+200 and x > conf.width*.5-200 and y > conf.height*.9-20 and y < conf.height*.9+20 then
+    love.system.openURL('https://play.google.com/store/apps/dev?id=7240016677312552672')
+  else
+    self.startGame = true
+  end
+end
+
+function Start:touchmoved(id, x, y, dx, dy, pressure)
+end
+
+function Start:touchreleased(id, x, y, dx, dy, pressure)
+  if self.startGame then
+    self:fadeout()
+  end
 end
 
 return Start
