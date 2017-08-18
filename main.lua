@@ -190,6 +190,18 @@ function love.touchreleased(id, x, y, dx, dy, pressure)
   game:touchreleased(id, x, y, dx, dy, pressure)
 end
 
+-- function love.mousepressed(x, y, button, istouch)
+--   game:touchpressed(1,x,y)
+-- end
+--
+-- function love.mousereleased(x, y, button, istouch)
+--   game:touchreleased(1,x,y)
+-- end
+--
+-- function love.mousemoved(x, y, dx, dy, istouch)
+--   game:touchmoved(1,x,y,dx,dy)
+-- end
+
 function love.keypressed(key, scancode, isrepeat)
   game:keypressed(key, scancode, isRepeat)
 end
