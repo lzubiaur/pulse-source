@@ -15,6 +15,8 @@ of a bug when writing on the internal storage. See https://bitbucket.org/MartinF
 * slow motion. when the player touch a special item the gameplay is slower so it become easier.
 
 ## TODO
+* Better graphics
+* Provide "more games",twitter,facebook url for desktop platforms too
 * add effect to coin (see trail.lua)
 * GUI (pause,quit...)
 * disable/enable volume
