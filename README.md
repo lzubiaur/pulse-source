@@ -26,15 +26,3 @@ of a bug when writing on the internal storage. See https://bitbucket.org/MartinF
 * investigate music sync (wave.lua/lovebpm.lua)
 * animated message when touch checkpoint (e.g. "saved"). The message move up and fade out when touching the checkpoint.
 
-## title ideas
-pulse
-cube/kube
-swipe
-slide
-slider
-chroma/kroma - https://en.wikipedia.org/wiki/Chrominance
-luma - https://en.wikipedia.org/wiki/Luma_(video)
-
-## Visual Concept
-80s background
-neon grid
