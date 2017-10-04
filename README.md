@@ -1,3 +1,7 @@
+Platformer game made using Lua (Love2D)
+
+![alt text](design/screenshot_2.jpg)
+
 ## Android
 Version of Love2D android is 0.10.2
 
